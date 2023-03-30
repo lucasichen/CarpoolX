@@ -1,4 +1,4 @@
-# 3A04_Final
+# RideShareX
 
 ## Setting up environment
 ### Set up Flask env
