@@ -14,13 +14,17 @@ const RegisterScreen = () => {
         console.warn('Register');
         navigation.navigate('Login');
     }
-    const onTermsOFUse = () => {
+    const onTermsOFUsePressed = () => {
         console.warn('Terms of Use');
         navigation.navigate('TermsOfUse');
     }
-    const onPrivacyPolicy = () => {
+    const onPrivacyPolicyPressed = () => {
         console.warn('Privacy Policy');
         navigation.navigate('PrivacyPolicy');
+    }
+    const onLoginPressed = () => {
+        console.warn('Login');
+        navigation.navigate('Login');
     }
     return (
         <View style={styles.root}>
@@ -49,12 +53,12 @@ const RegisterScreen = () => {
                 type="PRIMARY"/>
             <Text style={styles.text}>
                 By registering, you confirm that you accept our{' '}
-                <Text style={styles.link} onPress={onTermsOFUse}>Terms of Use</Text> and{' '}
-                <Text style={styles.link} onPress={onPrivacyPolicy}>Privacy Policy</Text>
+                <Text style={styles.link} onPress={onTermsOFUsePressed}>Terms of Use</Text> and{' '}
+                <Text style={styles.link} onPress={onPrivacyPolicyPressed}>Privacy Policy</Text>
             </Text>
             <CustomButton
                 text="Have an account? Sign in"
-                onPress={onForgotPassword}
+                onPress={onLoginPressed}
                 type="TERTIARY"/>
         </View>
     );
