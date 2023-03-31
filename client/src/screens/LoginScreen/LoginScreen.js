@@ -5,14 +5,14 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 
-function loginUser(username, password, callback) {
+function loginUser(email, password, callback) {
     return fetch('http://10.0.2.2:5000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: username,
+        email: email,
         password: password
       })
     })
@@ -34,16 +34,16 @@ function loginUser(username, password, callback) {
 
 const LoginScreen = () => {
     const {height} = useWindowDimensions();
-    const [username, setUsername] = useState('');
+    const [email, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const onSignInPressed = () => {
-        // validate the username and password
-        loginUser(username, password, success => {
+        // validate the email and password
+        loginUser(email, password, success => {
           if (success) {
             console.log('User logged in');
             navigation.navigate('Home');
           } else {
-            console.error('Invalid username or password');
+            console.error('Invalid email or password');
           }
         });
       };
@@ -59,8 +59,8 @@ const LoginScreen = () => {
                 style={[styles.logo, {height: height*0.35}]}
                 resizeMode="contain" />
             <CustomInput
-                placeholder="Username"
-                value={username}
+                placeholder="email"
+                value={email}
                 setValue={setUsername} />
             <CustomInput
                 placeholder="Password"

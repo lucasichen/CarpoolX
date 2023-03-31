@@ -26,4 +26,4 @@ htmlcov/
 *,cover
 
 # env files
-serviceAccountKey.json
+# serviceAccountKey.json

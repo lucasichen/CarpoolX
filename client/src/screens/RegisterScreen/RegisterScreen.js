@@ -4,6 +4,32 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 
+function registerUser(email, password, callback) {
+    return fetch('http://10.0.2.2:5000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.success) {
+          console.log('User registered');
+          callback(true);
+        } else {
+          callback(false);
+        }
+      })
+      .catch(err => {
+        console.log('error: ',err);
+        callback(false);
+      });
+}
 const RegisterScreen = () => {
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
@@ -11,9 +37,16 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const onRegisterPressed = () => {
-        console.warn('Register');
-        navigation.navigate('Login');
-    }
+        registerUser(email, password, success => {
+          if (success) {
+            console.log('User registered in');
+            navigation.navigate('Login');
+          } else {
+            console.error('Invalid email or password');
+          }
+        });
+      };
+        
     const onTermsOFUsePressed = () => {
         console.warn('Terms of Use');
         navigation.navigate('TermsOfUse');
