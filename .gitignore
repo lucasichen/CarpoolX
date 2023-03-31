@@ -24,3 +24,6 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+
+# env files
+serviceAccountKey.json
