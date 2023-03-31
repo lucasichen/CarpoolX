@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 flask = "*"
-firebase-admin = "*"
 pyrebase4 = "*"
 
 [dev-packages]

@@ -7,6 +7,7 @@ app = Flask(__name__)
 # initialize the account controller with the firebase service account key
 account_controller = AccountController()
 
+# Signup API route
 @app.route('/register', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -16,6 +17,7 @@ def signup():
     print("signup: ",result)
     return result
 
+# Login API route
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
