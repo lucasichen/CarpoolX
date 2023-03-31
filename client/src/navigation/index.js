@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -10,6 +9,9 @@ import TermsOfUseScreen from '../screens/TermsOfUseScreen';
 
 const Stack = createNativeStackNavigator();
 
+/** 
+ * @description This is the main navigation component. It contains all the screens that are available in the app.
+ */
 const Navigation = () => {
   return (
     <NavigationContainer>

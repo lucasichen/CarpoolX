@@ -3,6 +3,11 @@ import { View, Text, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 
+/**
+ * 
+ * @description This is the TermsOfUseScreen component. It is the screen when users agree to the terms of use in registration page.
+ * @returns {JSX.Element} The TermsOfUseScreen component
+ */
 const TermsOfUseScreen = () =>{
     const navigation = useNavigation();
     const onbackPressed = () => {

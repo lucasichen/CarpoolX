@@ -3,8 +3,15 @@ import { StyleSheet, View, Image, useWindowDimensions } from 'react-native';
 import logo from '../../../assets/images/ridesharelogo.jpg';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
+/**
+ * 
+ * @description api call to login user route
+ * @param {*} email 
+ * @param {*} password 
+ * @param {*} callback 
+ */
 function loginUser(email, password, callback) {
     return fetch('http://10.0.2.2:5000/login', {
       method: 'POST',
@@ -32,6 +39,11 @@ function loginUser(email, password, callback) {
       });
 }
 
+/**
+ * 
+ * @description LoginScreen component
+ * @returns {JSX.Element} The LoginScreen component
+ */
 const LoginScreen = () => {
     const {height} = useWindowDimensions();
     const [email, setUsername] = useState('');
