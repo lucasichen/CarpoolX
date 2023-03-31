@@ -39,7 +39,7 @@ const RegisterScreen = () => {
     const onRegisterPressed = () => {
         registerUser(email, password, success => {
           if (success) {
-            console.log('User registered in');
+            console.warn('Successfully registered');
             navigation.navigate('Login');
           } else {
             console.error('Invalid email or password');
@@ -48,15 +48,12 @@ const RegisterScreen = () => {
       };
         
     const onTermsOFUsePressed = () => {
-        console.warn('Terms of Use');
         navigation.navigate('TermsOfUse');
     }
     const onPrivacyPolicyPressed = () => {
-        console.warn('Privacy Policy');
         navigation.navigate('PrivacyPolicy');
     }
     const onLoginPressed = () => {
-        console.warn('Login');
         navigation.navigate('Login');
     }
     return (

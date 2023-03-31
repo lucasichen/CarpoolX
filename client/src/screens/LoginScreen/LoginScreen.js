@@ -48,7 +48,7 @@ const LoginScreen = () => {
         });
       };
     const onRegisterPressed = () => {
-        console.warn('Register');
+        console.log('Register Page');
         navigation.navigate('Register');
     }
     const navigation = useNavigation();
