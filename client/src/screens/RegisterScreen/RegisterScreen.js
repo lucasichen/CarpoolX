@@ -4,6 +4,13 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 
+/**
+ * 
+ * @description api call to register user route
+ * @param {*} email 
+ * @param {*} password 
+ * @param {*} callback 
+ */
 function registerUser(email, password, callback) {
     return fetch('http://10.0.2.2:5000/register', {
       method: 'POST',
@@ -30,6 +37,11 @@ function registerUser(email, password, callback) {
         callback(false);
       });
 }
+
+/**
+ * @description RegisterScreen component
+ * @returns {JSX.Element} The RegisterScreen component
+ */
 const RegisterScreen = () => {
     const navigation = useNavigation();
     const [username, setUsername] = useState('');

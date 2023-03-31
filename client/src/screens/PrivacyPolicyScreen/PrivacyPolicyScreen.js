@@ -3,6 +3,11 @@ import { View, Text, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 
+/**
+ * 
+ * @description This is the PrivacyPolicyScreen component. It is the screen that the user sees when they click on the Privacy Policy button on the RegisterScreen.
+ * @returns {JSX.Element} The PrivacyPolicyScreen component
+ */
 const PrivacyPolicyScreen = () =>{
     const navigation = useNavigation();
     const onbackPressed = () => {
