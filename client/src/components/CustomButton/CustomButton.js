@@ -21,10 +21,11 @@ const styles = StyleSheet.create({
     container_PRIMARY: {
         backgroundColor: '#3B7CFF',
     },
-    container_TERTIARY: {
-
+    container_DELETE: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#d16056',
     },
-
     text: {
         color: 'white',
         fontWeight: 'bold',
@@ -32,6 +33,11 @@ const styles = StyleSheet.create({
     text_TERTIARY: {
         color: 'gray'
     },
+    text_DELETE: {
+        color: '#d16056',
+        fontWeight: 'bold',
+        fontSize: 16,
+    }
 })
 
 export default CustomButton
