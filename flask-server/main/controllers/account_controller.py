@@ -10,7 +10,7 @@ class AccountController:
         self.firebase_auth = FirebaseAuth()
         self.firebase_db = FirebaseDatabase()
 
-    def create_account(self, email, password):
+    def create_account(self, name, email, password):
         """
         Creates a new user in Firebase Auth and users collection using the email and password provided
         """
@@ -22,9 +22,9 @@ class AccountController:
                 return {"success": True, "message": "User already exists!"}
             else:
                 # Create user in Firebase Auth
-                user = self.firebase_auth.create_user(email, password)
+                uid = self.firebase_auth.create_user(email, password)
                 # Create new user document in users collection
-                self.firebase_db.create_user(user, email, password)
+                self.firebase_db.create_user(uid, name, email, password)
             return {"success": True, "message": "User created successfully!"}
         except Exception as e:
             return {"success": False, "error": str(e)}

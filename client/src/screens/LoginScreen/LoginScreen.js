@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Image, useWindowDimensions } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
 import logo from '../../../assets/images/ridesharelogo.jpg';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import Icon from '../../components/common/Icon';
 
 /**
  * 
@@ -48,22 +49,77 @@ const LoginScreen = () => {
     const {height} = useWindowDimensions();
     const [email, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showEmailError, setShowEmailError] = useState(false);
+    const [showPasswordError, setShowPasswordError] = useState(false);
+    const [showEError, setShowEError] = useState('Please enter your email');
+    const [showPError, setShowPError] = useState('Please enter your password');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    /**
+     * @description Validates the email and password and calls the login api
+     */
     const onSignInPressed = () => {
-        // validate the email and password
-        loginUser(email, password, success => {
-          if (success) {
-            console.log('User logged in');
-            navigation.navigate('Home');
-          } else {
-            console.error('Invalid email or password');
-          }
-        });
+        let hasError = false;
+      
+        if (email === '') {
+          setShowEmailError(true);
+          setShowEError('Please enter your email');
+          hasError = true;
+        } else if (!emailRegex.test(email)) {
+          setShowEmailError(true);
+          setShowEError('Please enter a valid email');
+          hasError = true;
+        } else {
+          setShowEmailError(false);
+        }
+      
+        if (password === '') {
+          setShowPasswordError(true);
+          setShowPError('Please enter your password');
+          hasError = true;
+        } else if (password.length < 6) {
+          setShowPError('Password must be at least 6 characters');
+          hasError = true;
+        } else {
+            setShowPasswordError(false);
+        }
+      
+        if (!hasError) {
+          loginUser(email, password, success => {
+            if (success) {
+              console.log('User logged in');
+              navigation.navigate('Home');
+            } else {
+              setShowPError('Invalid password');
+              setShowEError('Invalid email');
+            }
+          });
+        }
       };
+      
+
+    /**
+     * @description Navigates to the RegisterScreen
+     */
     const onRegisterPressed = () => {
-        console.log('Register Page');
         navigation.navigate('Register');
     }
+
+    // navigation object
     const navigation = useNavigation();
+    
+    /**
+     * @description Resets the variables to their initial state if the user navigates away from this screen
+     */
+    const resetVars = useCallback(() => {
+        return () => {
+            setUsername('');
+            setPassword('');
+            setShowEmailError(false);
+            setShowPasswordError(false);
+        }
+    }, [])
+    useFocusEffect(resetVars);  // reset the variables when the user navigates away from this screen
+
     return (
         <View style={styles.root}>
             <Image
@@ -71,14 +127,24 @@ const LoginScreen = () => {
                 style={[styles.logo, {height: height*0.35}]}
                 resizeMode="contain" />
             <CustomInput
-                placeholder="email"
+                placeholder="Email"
                 value={email}
-                setValue={setUsername} />
+                setValue={setUsername}
+                type="fontisto"
+                icon="email" />
+            <View style={styles.error}>
+                {showEmailError && <Text style={styles.error_message}>{showEError}</Text>}
+            </View>
             <CustomInput
                 placeholder="Password"
                 value={password}
                 setValue={setPassword}
-                secureTextEntry/>
+                secureTextEntry
+                type="feather"
+                icon="lock" />
+            <View style={styles.error}>
+                {showPasswordError && <Text style={styles.error_message}>{showPError}</Text>}
+            </View>
             <CustomButton
                 text="Sign In"
                 onPress={onSignInPressed}
@@ -101,6 +167,17 @@ const styles = StyleSheet.create({
     },
     logo: {
         maxWidth: 300,
+    },
+    error: {
+        height: 20,
+        width: '100%',
+        alignItems: 'flex-start',
+    },
+    error_message: {
+        color: 'red',
+        fontSize: 12,
+        marginBottom: 5,
+        marginLeft: 10,
     },
 });
 

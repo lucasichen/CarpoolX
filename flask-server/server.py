@@ -11,10 +11,11 @@ account_controller = AccountController()
 @app.route('/register', methods=['POST'])
 def signup():
     data = request.get_json()
+    name = data.get('name')
     email = data.get('email')
     password = data.get('password')
-    result = account_controller.create_account(email, password)
-    print("signup: ",result)
+    result = account_controller.create_account(name, email, password)
+    print("signup: ", result)
     return result
 
 # Login API route

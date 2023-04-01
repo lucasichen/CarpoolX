@@ -59,9 +59,9 @@ class FirebaseDatabase(FirebaseInit):
         super().__init__()
         self.db = self.pyrebase.database()
 
-    def create_user(self, uid, email, password):
+    def create_user(self, uid, name, email, password):
         user_ref = (
-            self.db.child("user").child(uid).set({"email": email, "password": password})
+            self.db.child("user").child(uid).set({"name": name,"email": email, "password": password})
         )
         print(user_ref)
 
