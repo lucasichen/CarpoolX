@@ -6,9 +6,9 @@
 - Python 3.10
 
 ## Tech stack
-- Frontend: React Native
-- Backend: Python and Flask
-- Database: Firebase
+- Frontend: `React Native`
+- Backend: `Python` and `Flask`
+- Database: `Firebase`
 
 ## Setting up environment
 ### Set up Flask env
