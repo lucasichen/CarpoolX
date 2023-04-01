@@ -7,7 +7,6 @@
 
 ## Setting up environment
 ### Set up Flask env
-- Please watch this [video](https://www.youtube.com/watch?v=7LNl2JlZKHA) till the 4 min mark to setup your environment.
 - Place firebase credentials file into `service` folder in `flask-server`
 - Create a `.venv` folder in `flask-server` folder
 - cd into `flask-server` folder
