@@ -34,12 +34,31 @@ class AccountController:
         Logs in a user using the email and password provided
         """
         try:
-            print(email, password)
+            print("user:",email," has logged in with password:", password)
             # Check if user already exists in users collection
             response = self.firebase_auth.sign_in(email, password)
-            if response["success"]:
-                return {"success": True, "message": "User logged in successfully!"}
-            else:
-                return {"success": False, "error": response["error"]}
+            return response if response["success"] else {"success": False, "error": response["error"]}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+    
+    def get_user(self, id_token):
+        """
+        Gets the user details from the Firebase Auth
+        """
+        try:
+            response = self.firebase_auth.get_account_info(id_token)
+            uid = response["data"]["users"][0]["localId"]
+            user = self.firebase_db.get_user(uid)
+            return user if user["success"] else {"success": False, "error": user["error"]}
+        except Exception as e:
+            return {"success": False, "error": "can't get user account - "+str(e)}
+    
+    def refresh(self, refresh_token):
+        """
+        Refreshes the id token
+        """
+        try:
+            response = self.firebase_auth.refresh(refresh_token)
+            return response if response["success"] else {"success": False, "error": response["error"]}
         except Exception as e:
             return {"success": False, "error": str(e)}
