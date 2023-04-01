@@ -16,6 +16,9 @@ import Icon from '../common/Icon';
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, type, icon}) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+    /**
+     * @description This function is used to toggle the password visibility.
+     */
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
     };

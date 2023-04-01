@@ -201,7 +201,7 @@ const RegisterScreen = () => {
         type="feather"
         icon="lock" />
       <View style={styles.error}>
-        {showPasswordError && <Text style={styles.error_message}>{showCError}</Text>}
+        {showConfirmPasswordError && <Text style={styles.error_message}>{showCError}</Text>}
       </View>
       <CustomButton
           text="Register"
