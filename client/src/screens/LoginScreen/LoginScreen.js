@@ -4,41 +4,7 @@ import logo from '../../../assets/images/ridesharelogo.jpg';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import Icon from '../../components/common/Icon';
-
-/**
- * 
- * @description api call to login user route
- * @param {*} email 
- * @param {*} password 
- * @param {*} callback 
- */
-function loginUser(email, password, callback) {
-    return fetch('http://10.0.2.2:5000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        if (data.success) {
-          console.log('User logged in');
-          callback(true);
-        } else {
-          callback(false);
-        }
-      })
-      .catch(err => {
-        console.log('error: ',err);
-        callback(false);
-      });
-}
+import { loginUser } from './loginScript'
 
 /**
  * 
@@ -88,7 +54,7 @@ const LoginScreen = () => {
           loginUser(email, password, success => {
             if (success) {
               console.log('User logged in');
-              navigation.navigate('Home');
+              navigation.navigate('Profile');
             } else {
               setShowPError('Invalid password');
               setShowEError('Invalid email');

@@ -1,20 +1,42 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import CustomUserIcon from '../../components/CustomUserIcon';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
+import { getUserProfile } from './profileScript';
 
 const ProfileScreen = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [age, setAge] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const navigation = useNavigation();
     const [isConfirmationVisible, setConfirmationVisible] = useState(false);
     const [actionType, setActionType] = useState('');
+
+    /**
+     * @description useEffect hook to retrieve tokens from keychain
+     */
+    useEffect(() => {
+        const getUserProfileData = async () => {
+            const userProfile = await getUserProfile();
+            if (userProfile) {
+                console.log(userProfile);
+                setName(userProfile.name);
+                setEmail(userProfile.email);
+                if (userProfile.age){
+                    setAge(userProfile.age);
+                } else {
+                    setAge('');
+                }
+            } else {
+                console.log('Failed to retrieve user profile');
+            }
+        };
+        getUserProfileData();
+      }, []);
+      
 
     const handleDelete = () => {
         setActionType('delete');
@@ -49,7 +71,6 @@ const ProfileScreen = () => {
                 <Text style={styles.title}>Your Profile</Text>
                 <CustomUserIcon initials="LC" />
                 <CustomInput
-                    placeholder="Full Name"
                     value={name}
                     setValue={setName} 
                     type="ionicon"
@@ -63,7 +84,6 @@ const ProfileScreen = () => {
                     icon="idcard"
                 />
                 <CustomInput
-                    placeholder="Email"
                     value={email}
                     setValue={setEmail}
                     type="fontisto"

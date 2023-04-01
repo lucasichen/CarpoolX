@@ -49,6 +49,22 @@ class FirebaseAuth(FirebaseInit):
             else:
                 return {"success": False, "error": error_message}
 
+    def get_account_info(self, id_token):
+        try:
+            user = self.auth.get_account_info(id_token)
+            return {"success": True, "data": user}
+        except Exception as e:
+            error_message = e
+            return {"success": False, "error": "can't get account" + error_message}
+    
+    def refresh(self, refresh_token):
+        try:
+            user = self.auth.refresh(refresh_token)
+            return {"success": True, "data": user}
+        except pyrebase.exceptions.HTTPError as e:
+            error_message = e.args[1].get("error", {}).get("message", "")
+            return {"success": False, "error": error_message}
+
 
 class FirebaseDatabase(FirebaseInit):
     """
@@ -70,8 +86,15 @@ class FirebaseDatabase(FirebaseInit):
             users = self.db.child("user").get()
             for user in users.each():
                 if user.val().get("email") == email:
-                    print("t")
                     return True
             return False
         except Exception as e:
             return False
+    
+    def get_user(self, uid):
+        try:
+            user = self.db.child("user").child(uid).get()
+            return {"success": True, "data": user.val()}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+        
