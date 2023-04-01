@@ -1,16 +1,6 @@
-import React from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import React, { useState } from 'react';
+import {View, StyleSheet, TextInput} from 'react-native';
 import Icon from '../common/Icon';
-// import Icon from 'react-native-vector-icons/Ionicons'
-import FAIcon from 'react-native-vector-icons/FontAwesome';
-
-const ifPassword = (icon) => {
-    if (icon === 'lock') {
-        return (
-            <Icon style={styles.password_icon} type='ant' name="eye" size={20}/>
-        );
-    }
-}
 
 /**
  * 
@@ -24,6 +14,13 @@ const ifPassword = (icon) => {
  * @returns 
  */
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, type, icon}) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
+
+    const passwordIconName = isPasswordVisible ? 'eyeo' : 'eye';
     return (
         <View style={styles.container}>
             <Icon style={styles.icon} type={type} name={icon} size={20}/>
@@ -32,9 +29,17 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, type, icon}
                 onChangeText={setValue}
                 placeholder={placeholder}
                 style={styles.input}
-                secureTextEntry={secureTextEntry} />
+                secureTextEntry={secureTextEntry && !isPasswordVisible} />
             <Icon style={styles.password_icon} />
-            {ifPassword(icon)}
+            {secureTextEntry && (
+                <Icon
+                    style={styles.password_icon}
+                    type='ant'
+                    name={passwordIconName}
+                    size={20}
+                    onPress={togglePasswordVisibility}
+                />
+            )}
         </View>
     );
 }

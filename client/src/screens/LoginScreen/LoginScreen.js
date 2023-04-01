@@ -49,6 +49,7 @@ const LoginScreen = () => {
     const {height} = useWindowDimensions();
     const [email, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [secureTextEntry, setSecureTextEntry] = useState(true);
     const [showEmailError, setShowEmailError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
     const [showEError, setShowEError] = useState('Please enter your email');
@@ -139,7 +140,7 @@ const LoginScreen = () => {
                 placeholder="Password"
                 value={password}
                 setValue={setPassword}
-                secureTextEntry
+                secureTextEntry={secureTextEntry}
                 type="feather"
                 icon="lock" />
             <View style={styles.error}>
