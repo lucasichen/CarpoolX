@@ -26,7 +26,7 @@ const LoginScreen = () => {
      */
     const onSignInPressed = () => {
         let hasError = false;
-      
+        // ------------------ email validation ------------------
         if (email === '') {
             setShowEmailError(true);
             setShowEError('Please enter your email');
@@ -38,7 +38,7 @@ const LoginScreen = () => {
         } else {
             setShowEmailError(false);
         }
-      
+        // ------------------ password validation ------------------
         if (password === '') {
             setShowPasswordError(true);
             setShowPError('Please enter your password');
@@ -49,12 +49,12 @@ const LoginScreen = () => {
         } else {
             setShowPasswordError(false);
         }
-      
+        // ------------------ login api call ------------------
         if (!hasError) {
             loginUser(email, password, success => {
             if (success) {
                 console.log('User logged in');
-                navigation.navigate('Profile');
+                navigation.navigate('Home_App');
             } else {
                 setShowPasswordError(true);
                 setShowEmailError(true);

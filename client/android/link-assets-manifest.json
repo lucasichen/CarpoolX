@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/UberMoveTextBold.otf",
+      "sha1": "a61e10185a33afb250702a97c448e086f7269235"
+    },
+    {
+      "path": "assets/fonts/UberMoveTextLight.otf",
+      "sha1": "5eaf1ec18d8cefb2a77dc17651e1b1332fcef2e4"
+    },
+    {
+      "path": "assets/fonts/UberMoveTextMedium.otf",
+      "sha1": "ec54abd9181533bf4b13caebf1d06247fc648867"
+    },
+    {
+      "path": "assets/fonts/UberMoveTextRegular.otf",
+      "sha1": "3d3616c87b7f1b70221dee317c792c5cc630f587"
+    }
+  ]
+}
