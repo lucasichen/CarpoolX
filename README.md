@@ -1,4 +1,4 @@
-# RideShareX
+# CarpoolX
 ## Requirements
 - Android SDK
 - Latest Java
