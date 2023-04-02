@@ -21,6 +21,10 @@
 - Please watch this [video](https://www.youtube.com/watch?v=oorfevovPWw) as well as refer to this [guide](https://reactnative.dev/docs/environment-setup?guide=native) for the most updated instructions
 - Then cd in the `client` folder and run `npm install` to download required packages.
 
+### To run environments
+- in `flask-server` run `pipenv run server.py`
+- in `client` run `npx react-native start`
+
 #### Sources Used
 - Frontend:
   - [Login Auth](https://www.youtube.com/watch?v=ALnJLbjI7EY)
