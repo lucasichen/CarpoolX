@@ -5,18 +5,22 @@ const ConfirmationDialog = ({ actionType, onConfirm, onCancel }) => {
   const handleConfirm = () => {
     onConfirm();
     Alert.alert(`Account ${actionType}d`);
-  };
+  }
+
+  const handleCancel = () => {
+    onCancel();
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.confirmation_container}>
         <Text style={styles.message}>Are you sure you want to {actionType} your account?</Text>
         {actionType === 'delete' && <Text style={styles.message_text}>1. This action cannot be undone.</Text>}
-        {actionType === 'update' && <Text style={styles.message_text}>1. This action will update your account details.</Text>}
+        {actionType === 'update' && <Text style={styles.message_text}>1. This will update your account.</Text>}
         <Text style={styles.message_text}>2.Please confirm your action.</Text>
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button} onPress={onCancel}>
-            <Text style={styles.buttonText}>Cancel</Text>
+          <TouchableOpacity style={styles.button} onPress={handleCancel}>
+            <Text style={styles.buttonText}>cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, actionType === 'delete' ? styles.deleteButton : styles.updateButton]} onPress={handleConfirm}>
             <Text style={styles.buttonText}>{actionType}</Text>

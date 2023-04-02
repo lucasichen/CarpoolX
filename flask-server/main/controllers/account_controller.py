@@ -62,3 +62,29 @@ class AccountController:
             return response if response["success"] else {"success": False, "error": response["error"]}
         except Exception as e:
             return {"success": False, "error": str(e)}
+    
+    def update_user(self, id_token, name, age):
+        """
+        Updates the user details in the Firebase Auth
+        """
+        try:
+            response = self.firebase_auth.get_account_info(id_token)
+            uid = response["data"]["users"][0]["localId"]
+            user = self.firebase_db.update_user(uid, name, age)
+            return user if user["success"] else {"success": False, "error": user["error"]}
+        except Exception as e:
+            return {"success": False, "error": "can't update user account - "+str(e)}
+        
+    def delete_user(self, id_token):
+        """
+        Deletes the user from the Firebase Auth
+        """
+        try:
+            response = self.firebase_auth.get_account_info(id_token)
+            uid = response["data"]["users"][0]["localId"]
+            auth_response = self.firebase_auth.delete_user(uid)
+            database_response = self.firebase_db.delete_user(uid)
+            data = {'success':{'auth': auth_response, 'database': database_response}}
+            return data if data["success"] else {"success": False, "error": data["error"]}
+        except Exception as e:
+            return {"success": False, "error": "can't delete user account - "+str(e)}

@@ -39,3 +39,43 @@ export async function getUserProfile(callback) {
     });
 }
 
+/**
+ * 
+ * @description api call to change user info route
+ * @param {*} name 
+ * @param {*} age 
+ * @param {*} callback 
+ * @returns 
+ */
+export async function changeUserInfo(name, age, callback) {
+    // Retrieve tokens
+    tokens = await retrieveTokens();
+    idToken = tokens['idToken'];
+    user_body = JSON.stringify({name: name, age: age})
+    // Check if age is empty
+    if (age == '') {user_body = JSON.stringify({name: name})}
+    console.log('attempting to change user info')
+    return fetch('http://10.0.2.2:5000/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': idToken
+        },
+        body: user_body
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            console.log('User profile changed');
+            console.log(data)
+            return data; // Return the data from the function
+        } else {
+            return false; // Return false in case of failure
+        }
+    })
+    .catch(err => {
+        console.log('error: ',err);
+        return false; // Return false in case of failure
+    });
+}
+
