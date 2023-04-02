@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import GoogleMaps from '../../components/Maps/GoogleMaps'
 
 /**
  * 
@@ -9,7 +10,9 @@ import React from 'react'
 const HomeScreen = () => {
   return (
     <View>
-      <Text style={{ fontSize: 24, alignSelf: 'center'}}>Home</Text>
+      <View>
+        <GoogleMaps />
+      </View>
     </View>
   )
 }
