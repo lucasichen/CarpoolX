@@ -27,6 +27,9 @@ class FirebaseAuth(FirebaseInit):
         self.auth = self.pyrebase.auth()
 
     def create_user(self, email, password):
+        """
+        Create a new user in Firebase Authentication
+        """
         user = self.auth.create_user_with_email_and_password(
             email=email, password=password
         )
@@ -34,6 +37,9 @@ class FirebaseAuth(FirebaseInit):
 
     ### comment: need to clean up the error messages
     def sign_in(self, email, password):
+        """
+        Sign in a user using email and password
+        """
         try:
             user = self.auth.sign_in_with_email_and_password(
                 email=email, password=password
@@ -50,20 +56,35 @@ class FirebaseAuth(FirebaseInit):
                 return {"success": False, "error": error_message}
 
     def get_account_info(self, id_token):
+        """
+        Get the user details from Firebase Authentication
+        """
         try:
             user = self.auth.get_account_info(id_token)
             return {"success": True, "data": user}
         except Exception as e:
-            error_message = e
-            return {"success": False, "error": "can't get account" + error_message}
+            return {"success": False, "error": "can't get account" + e}
     
     def refresh(self, refresh_token):
+        """
+        Refreshes the id token
+        """
         try:
             user = self.auth.refresh(refresh_token)
             return {"success": True, "data": user}
         except pyrebase.exceptions.HTTPError as e:
             error_message = e.args[1].get("error", {}).get("message", "")
             return {"success": False, "error": error_message}
+        
+    def delete_user(self, id_token):
+        """
+        Deletes the user account
+        """
+        try:
+            user = self.auth.delete_user_account(id_token)
+            return {"success": True, "data": user}
+        except Exception as e:
+            return {"success": False, "error": "can't delete account" +e}
 
 
 class FirebaseDatabase(FirebaseInit):
@@ -76,12 +97,18 @@ class FirebaseDatabase(FirebaseInit):
         self.db = self.pyrebase.database()
 
     def create_user(self, uid, name, email, password):
+        """
+        Create a new user in the database
+        """
         user_ref = (
-            self.db.child("user").child(uid).set({"name": name,"email": email, "password": password})
+            self.db.child("user").child(uid).set({"name": name,"email": email, "password": password, "age": 0})
         )
         print(user_ref)
 
     def user_exists(self, email):
+        """
+        Check if user exists in the database
+        """
         try:
             users = self.db.child("user").get()
             for user in users.each():
@@ -92,9 +119,32 @@ class FirebaseDatabase(FirebaseInit):
             return False
     
     def get_user(self, uid):
+        """
+        Get user's data from the database
+        """
         try:
             user = self.db.child("user").child(uid).get()
             return {"success": True, "data": user.val()}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+    
+    def update_user(self, uid, name, age):
+        """
+        Update user's name and age in the database
+        """
+        try:
+            response = self.db.child("user").child(uid).update({"name": name, "age": age})
+            return {"success": True, "data": response}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+        
+    def delete_user(self, uid):
+        """
+        Delete user's data from the database
+        """
+        try:
+            response = self.db.child("user").child(uid).remove()
+            return {"success": True, "data": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
         
