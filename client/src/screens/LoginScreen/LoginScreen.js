@@ -28,36 +28,38 @@ const LoginScreen = () => {
         let hasError = false;
       
         if (email === '') {
-          setShowEmailError(true);
-          setShowEError('Please enter your email');
-          hasError = true;
+            setShowEmailError(true);
+            setShowEError('Please enter your email');
+            hasError = true;
         } else if (!emailRegex.test(email)) {
-          setShowEmailError(true);
-          setShowEError('Please enter a valid email');
-          hasError = true;
+            setShowEmailError(true);
+            setShowEError('Please enter a valid email');
+            hasError = true;
         } else {
-          setShowEmailError(false);
+            setShowEmailError(false);
         }
       
         if (password === '') {
-          setShowPasswordError(true);
-          setShowPError('Please enter your password');
-          hasError = true;
+            setShowPasswordError(true);
+            setShowPError('Please enter your password');
+            hasError = true;
         } else if (password.length < 6) {
-          setShowPError('Password must be at least 6 characters');
-          hasError = true;
+            setShowPError('Password must be at least 6 characters');
+            hasError = true;
         } else {
             setShowPasswordError(false);
         }
       
         if (!hasError) {
-          loginUser(email, password, success => {
+            loginUser(email, password, success => {
             if (success) {
-              console.log('User logged in');
-              navigation.navigate('Profile');
+                console.log('User logged in');
+                navigation.navigate('Profile');
             } else {
-              setShowPError('Invalid password');
-              setShowEError('Invalid email');
+                setShowPasswordError(true);
+                setShowEmailError(true);
+                setShowPError('Invalid password');
+                setShowEError('Invalid email');
             }
           });
         }

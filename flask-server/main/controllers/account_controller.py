@@ -80,9 +80,10 @@ class AccountController:
         Deletes the user from the Firebase Auth
         """
         try:
+            print('requesting to delete user with id_token:', id_token)
             response = self.firebase_auth.get_account_info(id_token)
             uid = response["data"]["users"][0]["localId"]
-            auth_response = self.firebase_auth.delete_user(uid)
+            auth_response = self.firebase_auth.delete_user(id_token)
             database_response = self.firebase_db.delete_user(uid)
             data = {'success':{'auth': auth_response, 'database': database_response}}
             return data if data["success"] else {"success": False, "error": data["error"]}

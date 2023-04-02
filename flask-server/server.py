@@ -43,7 +43,7 @@ def update_user():
     result = account_controller.update_user(id_token, name, age)
     return result
 
-@app.route('/users', methods=['DELETE'])
+@app.route('/user', methods=['DELETE'])
 def delete_user():
     id_token = request.headers.get('Authorization')
     result = account_controller.delete_user(id_token)
