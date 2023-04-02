@@ -5,13 +5,18 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import CustomUserIcon from '../../components/CustomUserIcon';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
-import { getUserProfile } from './profileScript';
+import { getUserProfile, changeUserInfo } from './profileScript';
 
+/**
+ * @description ProfileScreen component
+ * @returns {JSX.Element} The ProfileScreen component
+ */
 const ProfileScreen = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [age, setAge] = useState('');
-    const navigation = useNavigation();
+    const [initials, setInitials] = useState('');
+    // const navigation = useNavigation();
     const [isConfirmationVisible, setConfirmationVisible] = useState(false);
     const [actionType, setActionType] = useState('');
 
@@ -19,76 +24,101 @@ const ProfileScreen = () => {
      * @description useEffect hook to retrieve tokens from keychain
      */
     useEffect(() => {
-        const getUserProfileData = async () => {
-            const userProfile = await getUserProfile();
-            if (userProfile) {
-                console.log(userProfile);
-                setName(userProfile.name);
-                setEmail(userProfile.email);
-                if (userProfile.age){
-                    setAge(userProfile.age);
-                } else {
-                    setAge('');
-                }
-            } else {
-                console.log('Failed to retrieve user profile');
-            }
-        };
         getUserProfileData();
-      }, []);
-      
+    }, []);
 
+    /**
+     * @description get user profile data
+     * @returns {Promise<void>}
+     */
+    const getUserProfileData = async () => {
+        let userProfile = await getUserProfile();
+        if (userProfile) {
+            console.log(userProfile);
+            setName(userProfile.name);
+            setEmail(userProfile.email);
+            handleInitials(userProfile.name);
+            if (!userProfile.age == 0){
+                setAge(userProfile.age);
+            } else {
+                setAge('');
+            }
+        } else {
+            console.log('Failed to retrieve user profile');
+        }
+    };
+
+    const handleInitials = (username) => {
+        const nameArray = username.split(' ');
+        if (nameArray.length === 1) {
+            setInitials(tonameArray[0].charAt(0).toUpperCase());
+        } else {
+            setInitials(nameArray[0].charAt(0).toUpperCase() + nameArray[1].charAt(0).toUpperCase());
+        }
+    };
+    
+    /**
+     * @description handle the delete button press
+     */
     const handleDelete = () => {
         setActionType('delete');
         setConfirmationVisible(true);
     };
 
-    const handleConfirmationDismiss = () => {
-        setConfirmationVisible(false);
-    };
-
-    const handleConfirmationConfirm = () => {
-        // handle the delete confirmation here
-        setConfirmationVisible(false);
-    };
-
+    /**
+     * @description handle the update button press
+     */
     const handleUpdate = () => {
         // handle the update here
         setActionType('update');
         setConfirmationVisible(true);
     };
 
+    /**
+     * @description handle the confirmation dialog dismiss
+     */
+    const handleConfirmationDismiss = () => {
+        console.log('confirmation dismissed');
+        setConfirmationVisible(false);
+    };
+
+    /**
+     * @description handle the confirmation dialog confirm
+     */
+    const handleConfirmationConfirm = async () => {
+        // handle the delete confirmation here
+        setConfirmationVisible(false);
+        if (actionType === 'update') {
+            console.log('update confirmed');
+            // handle the update confirmation here
+            await changeUserInfo(name, age);
+            getUserProfileData();
+        }
+    };
+
     return (
         <View style={styles.root}>
             {isConfirmationVisible && 
-                    <ConfirmationDialog
-                    actionType={actionType}
-                    onDismiss={handleConfirmationDismiss}
-                    onConfirm={handleConfirmationConfirm}
-                />
+                <ConfirmationDialog
+                actionType={actionType}
+                onCancel={handleConfirmationDismiss}
+                onConfirm={handleConfirmationConfirm} />
                 }
             <View style={styles.container}>
                 <Text style={styles.title}>Your Profile</Text>
-                <CustomUserIcon initials="LC" />
+                <CustomUserIcon initials={initials} />
+                <Text style={styles.email}>{email}</Text>
                 <CustomInput
                     value={name}
                     setValue={setName} 
                     type="ionicon"
-                    icon="person"
-                />
+                    icon="person" />
                 <CustomInput
                     placeholder="Age"
                     value={age}
                     setValue={setAge} 
                     type="ant"
-                    icon="idcard"
-                />
-                <CustomInput
-                    value={email}
-                    setValue={setEmail}
-                    type="fontisto"
-                    icon="email"
-                />
+                    icon="idcard" />
                 <CustomButton
                     text="Update"
                     onPress={handleUpdate}
@@ -96,8 +126,7 @@ const ProfileScreen = () => {
                 <CustomButton
                     text="Delete Account"
                     onPress={handleDelete}
-                    type="DELETE"
-                />
+                    type="DELETE" />
             </View>
         </View>
     );
@@ -123,24 +152,10 @@ const styles = StyleSheet.create({
         color: '#051C60',
         margin: 10,
     },
-    text: {
-        fontSize: 12,
+    email: {
+        fontSize: 16,
         color: '#051C60',
-        margin: 10,
-    },
-    link: {
-        color: '#3B7CFF',
-    },
-    error: {
-        height: 20,
-        width: '100%',
-        alignItems: 'flex-start',
-    },
-    error_message: {
-        color: 'red',
-        fontSize: 12,
-        marginBottom: 5,
-        marginLeft: 10,
+        paddingBottom: 10,
     },
     container_delete: {
         marginTop: 100,
