@@ -119,6 +119,8 @@ const RegisterScreen = () => {
         console.warn('Successfully registered');
         navigation.navigate('Login');
       } else {
+        setShowEmailError(true);
+        setShowPasswordError(true);
         setShowPError('Invalid password');
         setShowEError('Invalid email');
       }

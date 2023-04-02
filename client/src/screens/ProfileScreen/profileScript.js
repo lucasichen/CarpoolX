@@ -79,3 +79,29 @@ export async function changeUserInfo(name, age, callback) {
     });
 }
 
+export async function deleteUser(callback) {
+    tokens = await retrieveTokens();
+    idToken = tokens['idToken'];
+    console.log('attempting to delete user')
+    return fetch('http://10.0.2.2:5000/user', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': idToken
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            console.log('User deleted');
+            console.log(data)
+            return data; // Return the data from the function
+        } else {
+            return false; // Return false in case of failure
+        }
+    })
+    .catch(err => {
+        console.log('error: ',err);
+        return false; // Return false in case of failure
+    }); 
+}

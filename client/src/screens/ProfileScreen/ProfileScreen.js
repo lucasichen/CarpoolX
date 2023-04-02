@@ -5,7 +5,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import CustomUserIcon from '../../components/CustomUserIcon';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
-import { getUserProfile, changeUserInfo } from './profileScript';
+import { getUserProfile, changeUserInfo, deleteUser } from './profileScript';
 
 /**
  * @description ProfileScreen component
@@ -16,7 +16,7 @@ const ProfileScreen = () => {
     const [email, setEmail] = useState('');
     const [age, setAge] = useState('');
     const [initials, setInitials] = useState('');
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
     const [isConfirmationVisible, setConfirmationVisible] = useState(false);
     const [actionType, setActionType] = useState('');
 
@@ -93,6 +93,13 @@ const ProfileScreen = () => {
             // handle the update confirmation here
             await changeUserInfo(name, age);
             getUserProfileData();
+        }
+        if (actionType === 'delete') {
+            console.log('delete confirmed');
+            // handle the delete confirmation here
+            let delete_data = await deleteUser();
+            console.log(delete_data);
+            navigation.navigate('Login');
         }
     };
 

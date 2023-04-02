@@ -60,8 +60,8 @@ class FirebaseAuth(FirebaseInit):
         Get the user details from Firebase Authentication
         """
         try:
-            user = self.auth.get_account_info(id_token)
-            return {"success": True, "data": user}
+            user_info = self.auth.get_account_info(id_token)
+            return {"success": True, "data": user_info}
         except Exception as e:
             return {"success": False, "error": "can't get account" + e}
     
@@ -81,8 +81,8 @@ class FirebaseAuth(FirebaseInit):
         Deletes the user account
         """
         try:
-            user = self.auth.delete_user_account(id_token)
-            return {"success": True, "data": user}
+            data = self.auth.delete_user_account(id_token)
+            return {"success": True, "data": data}
         except Exception as e:
             return {"success": False, "error": "can't delete account" +e}
 
