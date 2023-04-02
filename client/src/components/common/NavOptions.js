@@ -8,25 +8,25 @@ const data = [
         id: '1',
         title: 'Request ride',
         image: 'https://links.papareact.com/3pn',
-        screen: 'RequestRideScreen',
+        screen: 'RequestRide',
     },
     {
         id: '2',
         title: 'Join ride',
         image: 'https://ubernewsroomapi.10upcdn.com/wp-content/uploads/2022/10/Icone-Taxi-1-360x200.png',
-        screen: 'JoinRideScreen',
+        screen: 'JoinRide',
     },
     {
         id: '3',
         title: 'Private Ride',
         image: 'https://links.papareact.com/7pf',
-        screen: 'RequestPrivateRideScreen',
+        screen: 'RequestPrivateRide',
     },
     {
         id: '4',
         title: 'Report Person',
         image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
-        screen: 'ReportPersonScreen',
+        screen: 'ReportPerson',
     },
 ]
 
