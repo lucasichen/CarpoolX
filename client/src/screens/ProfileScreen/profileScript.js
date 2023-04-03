@@ -1,5 +1,10 @@
 import * as Keychain from 'react-native-keychain';
 
+/**
+ * 
+ * @description retrieve tokens from keychain
+ * @returns tokens from keychain
+ */
 const retrieveTokens = async () => {
     try {
       const credentials = await Keychain.getGenericPassword();
@@ -13,6 +18,11 @@ const retrieveTokens = async () => {
     }
 };
 
+/**
+ * @description api call to get user profile info 
+ * @param {*} callback
+ * @returns user profile info
+ */
 export async function getUserProfile(callback) {
     tokens = await retrieveTokens();
     idToken = tokens['idToken'];
@@ -79,6 +89,12 @@ export async function changeUserInfo(name, age, callback) {
     });
 }
 
+/**
+ * 
+ * @description api call to delete user route
+ * @param {*} callback 
+ * @returns 
+ */
 export async function deleteUser(callback) {
     tokens = await retrieveTokens();
     idToken = tokens['idToken'];
@@ -104,4 +120,22 @@ export async function deleteUser(callback) {
         console.log('error: ',err);
         return false; // Return false in case of failure
     }); 
+}
+
+/**
+ * 
+ * @description api call to change user password route
+ * @param {*} callback 
+ * @returns 
+ */
+export async function logOutUser(callback) {
+    // delete tokens from keychain
+    try {
+        await Keychain.resetGenericPassword();
+        console.log('keychain cleared');
+        return true;
+    } catch (error) {
+        console.log(error);
+        callback(false);
+    }
 }

@@ -5,7 +5,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import CustomUserIcon from '../../components/CustomUserIcon';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
-import { getUserProfile, changeUserInfo, deleteUser } from './profileScript';
+import { getUserProfile, changeUserInfo, deleteUser, logOutUser } from './profileScript';
 
 /**
  * @description ProfileScreen component
@@ -82,6 +82,17 @@ const ProfileScreen = () => {
         setConfirmationVisible(false);
     };
 
+    const handleLogout = async () => {
+        try {
+            let logOutResp = await logOutUser();
+            console.log(logOutResp);
+            navigation.navigate('Login');
+        } catch (error) {
+            console.log(error);
+        }
+        
+    };
+
     /**
      * @description handle the confirmation dialog confirm
      */
@@ -136,7 +147,7 @@ const ProfileScreen = () => {
                     type="DELETE" />
                 <CustomButton 
                     text="Logout"
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={handleLogout}
                     type="LOGOUT"
                 />
             </View>
