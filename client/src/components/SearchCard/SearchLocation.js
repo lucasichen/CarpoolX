@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, SafeAreaView} from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import Icon from '../common/Icon'
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 
-const SearchLocation = props => {
+const SearchLocation = (text, onSetLocation) => {
+
+    const handleDesination = (data, details = null) => {
+        if (details) {
+            onSetLocation(details.location)
+        }
+        
+    }
+
     return (
         <SafeAreaView>
             <View>
                 <GooglePlacesAutocomplete
-                    placeholder= {props.text}
+                    placeholder= {text}
                     styles={styles}
                     fetchDetails={true}
                     returnKeyType={"search"}
                     minLength={2}
-                    onPress={(data, details = null){
-                        props.destination = ()
-                        {details.location}
+                    onPress={(data, details = null) => {
+                        handleDesination(data, details)
                     }}
                     enablePoweredByContainer={false}
                     query={{

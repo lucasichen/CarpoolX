@@ -7,26 +7,32 @@ import { useNavigation } from '@react-navigation/native'
 
 const RequestRideScreen = () => {
 
-  const navigation = useNavigation();
+    const navigation = useNavigation()
+    cosnt [pickup, setPickup] = useState(null)
+    cosnt [destination, setDestination] = useState(null)
 
-  const onNextPressed = () => {
-    navigation.navigate('PeopleShare')
-  }
-  return (
-    <View>
-      <SearchLocation 
-        text='Pick up location'/>
-      <SearchLocation 
-        text='Where to'/>
-      <GoogleMaps />
-      <CustomButton 
-        text='Next'
-        onPress={onNextPressed}
-        type="PRIMARY"
-      />
+    const onNextPressed = () => {
+        if (pickup && destination) {
+            navigation.navigate('PeopleShare', { pickup, destination })
+        }
+    }
+    return (
+        <View>
+        <SearchLocation 
+            text='Pick up location'
+            onSetLocation={setPickup} />
+        <SearchLocation 
+            text='Where to'
+            onSetLocation={setDestination} />
+        <GoogleMaps />
+        <CustomButton 
+            text='Next'
+            onPress={onNextPressed}
+            type="PRIMARY"
+        />
 
-    </View>
-  )
+        </View>
+    )
 }
 
 export default RequestRideScreen
