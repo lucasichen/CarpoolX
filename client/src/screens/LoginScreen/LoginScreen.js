@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
 import logo from '../../../assets/images/ridesharelogo.jpg';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { loginUser } from './loginScript'
+import * as Keychain from 'react-native-keychain';
 
 /**
  * 
@@ -21,6 +22,17 @@ const LoginScreen = () => {
     const [showEError, setShowEError] = useState('Please enter your email');
     const [showPError, setShowPError] = useState('Please enter your password');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // check if user is already logged in
+    useEffect(() => {
+      // Check if there is a stored password
+      Keychain.getGenericPassword().then((credentials) => {
+        if (credentials.password) {
+          navigation.navigate('Home_App');
+        }
+        
+      });
+    }, []);
     /**
      * @description Validates the email and password and calls the login api
      */
