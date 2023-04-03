@@ -134,6 +134,11 @@ const ProfileScreen = () => {
                     text="Delete Account"
                     onPress={handleDelete}
                     type="DELETE" />
+                <CustomButton 
+                    text="Logout"
+                    onPress={() => navigation.navigate('Login')}
+                    type="LOGOUT"
+                />
             </View>
         </View>
     );
