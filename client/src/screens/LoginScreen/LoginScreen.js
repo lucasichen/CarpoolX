@@ -103,10 +103,9 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.root}>
-            <Image
-                source={logo}
-                style={[styles.logo, {height: height*0.35}]}
-                resizeMode="contain" />
+            <View style={[styles.logo, {height: height*0.35, paddingTop: height*0.15}]}>
+                <Text style={styles.carpool}>Carpool</Text><Text style={styles.x}>X</Text>
+            </View>
             <CustomInput
                 placeholder="Email"
                 value={email}
@@ -148,6 +147,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         maxWidth: 300,
+        flexDirection: 'row',
     },
     error: {
         height: 20,
@@ -159,6 +159,16 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginBottom: 5,
         marginLeft: 10,
+    },
+    carpool: {
+        fontSize: 40,
+        fontFamily: 'UberMoveTextBold',
+        color: 'black',
+      },
+    x: {
+        fontSize: 40,
+        fontFamily: 'UberMoveTextBold',
+        color: '#7fa9c1',
     },
 });
 
