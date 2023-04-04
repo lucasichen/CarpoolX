@@ -111,7 +111,13 @@ export async function deleteUser(callback) {
         if (data.success) {
             console.log('User deleted');
             console.log(data)
-            return data; // Return the data from the function
+            let logout = logOutUser();
+            if (logout) {
+                return data; // Return the data from the function
+            } else {
+                return false;
+            }
+            
         } else {
             return false; // Return false in case of failure
         }
