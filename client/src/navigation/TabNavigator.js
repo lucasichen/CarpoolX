@@ -3,8 +3,8 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
-import Icon from '../components/common/Icon'
-
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 const TabNavigator = () => {
     const Tab = createBottomTabNavigator()
@@ -22,16 +22,24 @@ const TabNavigator = () => {
             name="Home"
             component={HomeScreen}
             options={{
-                tabBarIcon: (color) => (
-                <Icon name="home" color={color} size={40} />
+                tabBarIcon: ({color}) => (
+                <FAIcon name="home" color={color} size={40} />
+                ),
+        }}/>
+        <Tab.Screen
+            name="Joinride"
+            component={HomeScreen}
+            options={{
+                tabBarIcon: ({color}) => (
+                <FAIcon name="qrcode" color={color} size={40} />
                 ),
         }}/>
         <Tab.Screen
             name="Profile"
             component={ProfileScreen}
             options={{
-                tabBarIcon: (color) => (
-                <Icon name="person-circle" type="ionicon" color={color} size={40} />
+                tabBarIcon: ({color}) => (
+                <Ionicon name="person-circle" color={color} size={40} />
                 ),
         }}/>
     </Tab.Navigator>
