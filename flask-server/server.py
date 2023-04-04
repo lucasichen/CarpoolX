@@ -49,6 +49,13 @@ def delete_user():
     result = account_controller.delete_user(id_token)
     return result
 
+@app.route('/taxi/information', methods=['POST'])
+def taxi_information():
+    data = request.get_json()
+    taxi_id = data.get('taxi_id')
+    result = account_controller.taxi_information(taxi_id)
+    return result
+
 if __name__ == '__main__':
     app.run(debug=True)
 
