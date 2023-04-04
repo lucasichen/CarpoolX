@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import FAIcon from 'react-native-vector-icons/FontAwesome';
+import QRCodeScreen from '../screens/QRCodeScreen'
 
 const TabNavigator = () => {
     const Tab = createBottomTabNavigator()
@@ -27,8 +28,8 @@ const TabNavigator = () => {
                 ),
         }}/>
         <Tab.Screen
-            name="Joinride"
-            component={HomeScreen}
+            name="QRCode"
+            component={QRCodeScreen}
             options={{
                 tabBarIcon: ({color}) => (
                 <FAIcon name="qrcode" color={color} size={40} />

@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
-import logo from '../../../assets/images/ridesharelogo.jpg';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -103,10 +102,9 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.root}>
-            <Image
-                source={logo}
-                style={[styles.logo, {height: height*0.35}]}
-                resizeMode="contain" />
+            <View style={[styles.logo, {height: height*0.35, paddingTop: height*0.15}]}>
+                <Text style={styles.carpool}>Carpool</Text><Text style={styles.x}>X</Text>
+            </View>
             <CustomInput
                 placeholder="Email"
                 value={email}
@@ -136,7 +134,7 @@ const LoginScreen = () => {
                 type="TERTIARY"/>
         </View>
     );
-    }
+}
 
 const styles = StyleSheet.create({
     root: {
@@ -148,6 +146,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         maxWidth: 300,
+        flexDirection: 'row',
     },
     error: {
         height: 20,
@@ -159,6 +158,16 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginBottom: 5,
         marginLeft: 10,
+    },
+    carpool: {
+        fontSize: 40,
+        fontFamily: 'UberMoveTextBold',
+        color: 'black',
+      },
+    x: {
+        fontSize: 40,
+        fontFamily: 'UberMoveTextBold',
+        color: '#7fa9c1',
     },
 });
 

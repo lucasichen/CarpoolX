@@ -147,4 +147,14 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": response}
         except Exception as e:
             return {"success": False, "error": str(e)}
+    
+    def get_taxi(self, taxi_id):
+        """
+        Get taxi's data from the database
+        """
+        try:
+            taxi = self.db.child("taxi").child(taxi_id).get()
+            return {"success": True, "data": taxi.val()}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
         

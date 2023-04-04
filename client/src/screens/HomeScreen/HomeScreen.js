@@ -8,7 +8,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container_title}>
-        <Text style={styles.title}>CarpoolX</Text>
+        <Text style={styles.carpool}>Carpool</Text><Text style={styles.x}>X</Text>
       </View>
       <View style={styles.container_nav}>
         <NavOptions />
@@ -27,11 +27,17 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginTop: 25,
     marginBottom: 25,
+    flexDirection: 'row',
   },
-  title: {
+  carpool: {
     fontSize: 30,
-    fontFamily: 'UberMoveTextMedium',
+    fontFamily: 'UberMoveTextBold',
     color: 'black',
+  },
+  x: {
+    fontSize: 30,
+    fontFamily: 'UberMoveTextBold',
+    color: '#7fa9c1',
   },
   container_nav: {
     alignItems: 'center',
