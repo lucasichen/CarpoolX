@@ -22,26 +22,28 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: 'white',
     height: '100%',
+    alignItems: 'center',
   },
   container_title: {
-    marginLeft: 15,
+    // marginLeft: 15,
     marginTop: 25,
     marginBottom: 25,
     flexDirection: 'row',
   },
   carpool: {
-    fontSize: 30,
+    fontSize: 40,
     fontFamily: 'UberMoveTextBold',
     color: 'black',
+    paddingTop: 25,
   },
   x: {
-    fontSize: 30,
+    fontSize: 40,
     fontFamily: 'UberMoveTextBold',
     color: '#7fa9c1',
+    paddingTop: 25,
   },
   container_nav: {
     alignItems: 'center',
-    marginTop: 25,
   },
 })
 
