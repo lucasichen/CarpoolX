@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#d16056',
     },
+    container_RIDE: {
+        backgroundColor: '#3B7CFF',
+        marginTop: 40,
+    },
     text: {
         color: 'white',
         fontWeight: 'bold',
