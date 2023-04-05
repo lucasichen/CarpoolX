@@ -28,11 +28,12 @@ def login():
     return result
 
 @app.route('/requestride', methods=['POST'])
-def request():
+def request_ride():
     data = request.get_json()
     pickupLoc = data.get('pickuploc')
     destLoc = data.get('destloc')
     capacity = data.get('capacity')
+    pass
     
 @app.route('/user', methods=['GET'])
 def user():
