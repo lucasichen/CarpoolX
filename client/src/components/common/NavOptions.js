@@ -28,6 +28,12 @@ const data = [
         image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
         screen: 'ReportPerson',
     },
+    {
+        id: '5',
+        title: 'Rate a User',
+        image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
+        screen: 'RateUser',
+    },
 ]
 
 const NavOptions = () => {
