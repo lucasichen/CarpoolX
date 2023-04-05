@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     container_LOGOUT: {
         backgroundColor: 'orange',
     },
+    container_RIDE: {
+        backgroundColor: '#3B7CFF',
+        marginTop: 40,
+    },
     text: {
         color: 'white',
         fontWeight: 'bold',

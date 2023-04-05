@@ -1,1 +1,1 @@
-export { default } from './JoinRideScreen';
+export {default} from './JoinRideScreen';
