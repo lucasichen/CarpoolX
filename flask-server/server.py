@@ -56,6 +56,13 @@ def taxi_information():
     result = account_controller.taxi_information(taxi_id)
     return result
 
+@app.route('/user/report', methods=['POST'])
+def report_user():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    result = account_controller.report_user(user_id)
+    return result
+
 if __name__ == '__main__':
     app.run(debug=True)
 
