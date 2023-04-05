@@ -19,7 +19,7 @@ export const findTaxi = (taxiCode, callback) => {
     .then(data => {
         if (data.success) {
             console.log('Taxi found');
-            callback(true);
+            return data
         } else {
             console.log('Taxi not found');
             callback(false);
