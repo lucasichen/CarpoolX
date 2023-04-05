@@ -1,11 +1,13 @@
 from flask import Flask, request, jsonify
 from main.controllers.account_controller import AccountController
+from main.controllers.rideshare_controller import RideshareController
 
 # initialize the flask app
 app = Flask(__name__)
 
 # initialize the account controller with the firebase service account key
 account_controller = AccountController()
+rideshare_controller = RideshareController()
 
 # Signup API route
 @app.route('/register', methods=['POST'])
@@ -28,11 +30,13 @@ def login():
     return result
 
 @app.route('/requestride', methods=['POST'])
-def request():
+def request_ride():
     data = request.get_json()
     pickupLoc = data.get('pickuploc')
     destLoc = data.get('destloc')
     capacity = data.get('capacity')
+    result = rideshare_controller.create_ride(pickupLoc, destLoc, capacity)
+    return result
     
 @app.route('/user', methods=['GET'])
 def user():
