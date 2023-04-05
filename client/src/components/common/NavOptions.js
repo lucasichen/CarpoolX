@@ -20,7 +20,7 @@ const data = [
         id: '3',
         title: 'Private Ride',
         image: 'https://links.papareact.com/7pf',
-        screen: 'RequestPrivateRide',
+        screen: 'PrivateEvent',
     },
     {
         id: '4',
