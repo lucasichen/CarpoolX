@@ -26,7 +26,7 @@ const data = [
         id: '4',
         title: 'Report Person',
         image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
-        screen: 'ReportPerson',
+        screen: 'Report',
     },
 ]
 
