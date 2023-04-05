@@ -27,6 +27,13 @@ def login():
     result = account_controller.login(email, password)
     return result
 
+@app.route('/requestride', methods=['POST'])
+def request():
+    data = request.get_json()
+    pickupLoc = data.get('pickuploc')
+    destLoc = data.get('destloc')
+    capacity = data.get('capacity')
+    
 @app.route('/user', methods=['GET'])
 def user():
     id_token = request.headers.get('Authorization')

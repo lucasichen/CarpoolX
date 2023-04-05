@@ -105,6 +105,15 @@ class FirebaseDatabase(FirebaseInit):
         )
         print(user_ref)
 
+    def create_ride(self, pickup, dest, capacity):
+        """
+        Create a ride offer in the database
+        """
+        ride_offer = (
+            self.db.child("rides").set({"pickup": pickup, "dest": dest, "capacity": capacity})
+        )
+        print(ride_offer)
+        
     def user_exists(self, email):
         """
         Check if user exists in the database
