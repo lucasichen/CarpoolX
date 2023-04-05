@@ -12,5 +12,6 @@ class RideshareController:
         """
         Creates a ride offer to store in the database.
         """
+        pass
 
     
