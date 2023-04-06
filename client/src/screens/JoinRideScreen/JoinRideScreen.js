@@ -2,41 +2,15 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import React, {useState} from 'react'
 import GoogleMaps from '../../components/Maps/GoogleMaps'
 import CustomButton from '../../components/CustomButton'
-import CustomInput from '../../components/CustomInput'
-import DropdownMenu from '../../components/DropdownMenu'
 import { useNavigation } from '@react-navigation/native'
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-function sendRide(pickup, dest, capacity){
-  return fetch('http://10.0.2.2:5000/requestride', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          pickuploc: pickup,
-          destloc: dest,
-          capacity: capacity
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log("The Response was", data)
-      })
-      .catch(error =>{
-        console.error("Error occured ->: ", error)
-      })
-  }
-
-  )
-}
-
-const RequestRideScreen = () => {
+const JoinRideScreen = () => {
 
     const navigation = useNavigation()
     const [pickup, setPickup] = useState(null)
     const [destination, setDestination] = useState(null)
-    const [capacity, setCapacity] = useState('')
 
     const [showPickupError, setPickupError] = useState(false);
     const [showDestError, setDestError] = useState(false);
@@ -61,8 +35,6 @@ const RequestRideScreen = () => {
           }
         }
     }
-
-    console.log(capacity)
     return (
         <View>
           <View style={styles.container}>
@@ -108,35 +80,25 @@ const RequestRideScreen = () => {
             <View style={styles.errorContainer}>
               {showDestError && <Text style={styles.errorMsg}>{errorMsg}</Text>}
             </View>
-            <View style={styles.capacity}>
-              <Text>
-              How many people in the ride?
-              </Text>
-              <CustomInput
-                placeholder="Enter a number between 1-5"
-                value={capacity}
-                setValue={setCapacity}
-              />
-            </View>
           </View>
           
           <GoogleMaps />
-          <CustomButton 
+          <CustomButton style={styles.buttonStyle} 
             text='Next'
             onPress={onNextPressed}
-            type="RIDE"
+            type="PRIMARY"
           />
         </View>
     )
 }
 
-export default RequestRideScreen
+export default JoinRideScreen
 
 const styles = StyleSheet.create({
   container: {
       backgroundColor: 'white',
-      paddingTop:10,
-      paddingBottom: 0,
+      paddingTop: 10,
+      paddingBottom: 10,
       flex: 0
   },
   textInput: {
@@ -156,10 +118,7 @@ const styles = StyleSheet.create({
     height: 15,
     marginLeft: 20,
   },
-  capacity: {
-    marginLeft: 20,
-  },
   buttonStyle: {
-    marginTop: 40
-  },
+    marginTop: 20
+  }
 })

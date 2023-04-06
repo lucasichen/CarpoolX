@@ -22,14 +22,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#3B7CFF',
     },
     container_DELETE: {
-        marginTop: 100,
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#d16056',
     },
     container_LOGOUT: {
-        // marginTop: 100,
         backgroundColor: 'orange',
+    },
+    container_RIDE: {
+        backgroundColor: '#3B7CFF',
+        marginTop: 40,
     },
     text: {
         color: 'white',

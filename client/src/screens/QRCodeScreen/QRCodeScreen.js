@@ -3,7 +3,6 @@ import React, { useState, useCallback } from 'react'
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { findTaxi } from './codeScript';
 import Icon from '../../components/common/Icon';
 
 const QRCodeScreen = () => {
@@ -17,7 +16,7 @@ const QRCodeScreen = () => {
       setShowError(true);
       setShowEError('Please enter valid taxi code');
     } else {
-      findTaxi(code);
+      navigation.navigate('TaxiInformation', {code:code});
     }
   }
   /**
@@ -36,7 +35,7 @@ const QRCodeScreen = () => {
     <View style={styles.root}>
       <View style={styles.container}>
         <View style={styles.container_title}>
-            <Text style={styles.title}>Verify Taxi</Text>
+          <Text style={styles.title}>Verify Taxi</Text>
         </View>
         <View style={styles.container_taxi}>
           <Icon style="taxi" name="taxi" color="#3B7CFF" size={100}/>
@@ -54,9 +53,9 @@ const QRCodeScreen = () => {
             {showError && <Text style={styles.error_message}>{showEError}</Text>}
         </View>
         <CustomButton
-            text="Submit Code"
-            onPress={handleSubmitCode}
-            type="PRIMARY"/>
+          text="Submit Code"
+          onPress={handleSubmitCode}
+          type="PRIMARY" />
       </View>
     </View>
   );
@@ -85,6 +84,7 @@ const styles = StyleSheet.create({
   },
   container_text: {
     marginTop: 20,
+    marginBottom: 20,
     width: '80%',
   },
   instructions: {

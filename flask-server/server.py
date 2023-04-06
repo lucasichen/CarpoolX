@@ -27,6 +27,14 @@ def login():
     result = account_controller.login(email, password)
     return result
 
+@app.route('/requestride', methods=['POST'])
+def request_ride():
+    data = request.get_json()
+    pickupLoc = data.get('pickuploc')
+    destLoc = data.get('destloc')
+    capacity = data.get('capacity')
+    pass
+    
 @app.route('/user', methods=['GET'])
 def user():
     id_token = request.headers.get('Authorization')
@@ -54,6 +62,13 @@ def taxi_information():
     data = request.get_json()
     taxi_id = data.get('taxi_id')
     result = account_controller.taxi_information(taxi_id)
+    return result
+
+@app.route('/user/report', methods=['POST'])
+def report_user():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    result = account_controller.report_user(user_id)
     return result
 
 if __name__ == '__main__':

@@ -90,7 +90,6 @@ const ProfileScreen = () => {
         } catch (error) {
             console.log(error);
         }
-        
     };
 
     /**
@@ -141,15 +140,17 @@ const ProfileScreen = () => {
                     text="Update"
                     onPress={handleUpdate}
                     type="PRIMARY" />
-                <CustomButton
-                    text="Delete Account"
-                    onPress={handleDelete}
-                    type="DELETE" />
-                <CustomButton 
-                    text="Logout"
-                    onPress={handleLogout}
-                    type="LOGOUT"
-                />
+                <View style={styles.container_delete}>
+                    <CustomButton
+                        text="Delete Account"
+                        onPress={handleDelete}
+                        type="DELETE" />
+                    <CustomButton 
+                        text="Logout"
+                        onPress={handleLogout}
+                        type="LOGOUT"
+                    />
+                </View>
             </View>
         </View>
     );

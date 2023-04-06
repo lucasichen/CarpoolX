@@ -3,6 +3,7 @@ import {StyleSheet, View, SafeAreaView, Dimensions, Text, PermissionsAndroid, Bu
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import CustomButton from "../CustomButton/CustomButton";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const {width, height} = Dimensions.get('window')
 
@@ -65,7 +66,7 @@ const GoogleMaps = () => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView>
           <View style={styles.container}>
               <MapView
               style={styles.mapStyle}
@@ -91,10 +92,7 @@ const GoogleMaps = () => {
               </MapView>
           </View>
           <View>
-            <CustomButton 
-              title='Get Location'
-              onPress= {getLocation}
-              type="PRIMARY" />
+            <Button style={styles.buttonStyle} onPress={getLocation} title="Get Current Location" />
           </View>
         </SafeAreaView>
     )
@@ -193,4 +191,12 @@ const styles = StyleSheet.create({
       height: '100%',
       flex: 1
   },
+  buttonStyle: {
+    width: '100%',
+    padding: 15,
+    marginVertical: 5,
+    color: '#3B7CFF',
+    alignItems: 'center',
+    borderRadius: 5,
+  }
 });
