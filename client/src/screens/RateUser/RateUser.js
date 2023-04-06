@@ -1,41 +1,12 @@
-import React, {useState, useCallback} from 'react';
-import { StyleSheet, Text, View, Button, Modal } from 'react-native';
-import CustomInput from '../../components/CustomInput';
+import React from 'react';
+import { StyleSheet, Text, View} from 'react-native';
 import CustomButton from '../../components/CustomButton';
-import StarRating from '../../components/StarRating';
-import { useNavigation,useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-
-/**
- *
- * @description api call to register user route
- * @param {*} username
- * @param {*} rating
- * @param success
- */
-function rateUser(username, rating, success) {
-
-}
-
-/**
- * @description RegisterScreen component
- * @returns {JSX.Element} The RegisterScreen component
- */
-const RateUser = () => {
+const RateUser = ({route}) => {
     const navigation = useNavigation();
     const userList = ["rafeed", "allison", "henushan", "lucas"];
 
-
-
-    /**
-     * @description Resets the variables to their initial state if the user navigates away from this screen
-     */
-    const resetVars = useCallback(() => {
-        return () => {
-
-        }
-    }, [])
-    useFocusEffect(resetVars);  // reset the variables when the user navigates away from this screen
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 30 }}>Rate your fellow riders!</Text>
