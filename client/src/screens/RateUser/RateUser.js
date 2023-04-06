@@ -27,6 +27,9 @@ const RateUser = () => {
     const [showRatingError, setRatingError] = useState(false);
     const [showUError, setShowUError] = useState('Please enter name of user');
     const [showRError, setShowRError] = useState('Please provide a rating');
+    const callback = (option) => {
+        setRating(option);
+    }
 
     /**
      * @description Validates the name, email, password and confirm password and calls the register api
@@ -78,8 +81,7 @@ const RateUser = () => {
                 {showUsernameError && <Text style={styles.error_message}>{showUError}</Text>}
             </View>
             <StarRating
-                starRating={rating}
-                setStarRating={setRating} />
+                parentCallback={callback}/>
             <View style={styles.error}>
                 {showRatingError && <Text style={styles.error_message}>{showRErrorError}</Text>}
             </View>

@@ -9,12 +9,17 @@ import {
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-export default function App() {
+export default function App({parentCallback}) {
     const starRatingOptions = [1, 2, 3, 4, 5];
 
     const [starRating, setStarRating] = useState(null);
 
     const animatedButtonScale = new Animated.Value(1);
+
+    const handleOnPress = (option) => {
+        setStarRating(option)
+        parentCallback(option)
+    };
 
     const handlePressIn = () => {
         Animated.spring(animatedButtonScale, {
@@ -47,7 +52,7 @@ export default function App() {
                         <TouchableWithoutFeedback
                             onPressIn={() => handlePressIn(option)}
                             onPressOut={() => handlePressOut(option)}
-                            onPress={() => setStarRating(option)}
+                            onPress={() => handleOnPress(option)}
                             key={option}
                         >
                             <Animated.View style={animatedScaleStyle}>
