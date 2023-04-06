@@ -4,13 +4,15 @@ import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const ConfirmationDialog = ({ actionType, onConfirm, onCancel }) => {
   const handleConfirm = () => {
     onConfirm();
-    if (actionType != 'report') {
+    if (actionType == 'event'){
+      Alert.alert('Event Created');
+    } else if (actionType != 'report') {
       Alert.alert(`Account ${actionType}d`);
     }
     else {
       Alert.alert(`User ${actionType}ed`);
     }
-  }
+}
 
   const handleCancel = () => {
     onCancel();
@@ -19,17 +21,19 @@ const ConfirmationDialog = ({ actionType, onConfirm, onCancel }) => {
   return (
     <View style={styles.container}>
       <View style={styles.confirmation_container}>
-        {actionType != 'report' && <Text style={styles.message}>Are you sure you want to {actionType} your account?</Text>}
+        {actionType != 'report' && actionType != 'event' && <Text style={styles.message}>Are you sure you want to {actionType} your account?</Text>}
         {actionType === 'report' && <Text style={styles.message}>Are you sure you want to report this user?</Text>}
         {(actionType === 'delete' || actionType === 'report') && <Text style={styles.message_text}>1. This action cannot be undone.</Text>}
         {actionType === 'update' && <Text style={styles.message_text}>1. This will update your account.</Text>}
+        {actionType == 'event' && <Text style={styles.message}>Your event information can't be changed after this point.</Text>}
         <Text style={styles.message_text}>2. Please confirm your action.</Text>
         <View style={styles.buttonsContainer}>
           <TouchableOpacity style={styles.button} onPress={handleCancel}>
             <Text style={styles.buttonText}>cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, (actionType === 'delete' || actionType === 'report') ? styles.deleteButton : styles.updateButton]} onPress={handleConfirm}>
-            <Text style={styles.buttonText}>{actionType}</Text>
+            {actionType != 'event' && <Text style={styles.buttonText}>{actionType}</Text>}
+            {actionType == 'event' && <Text style={styles.buttonText}>Confirm</Text>}
           </TouchableOpacity>
         </View>
       </View>
