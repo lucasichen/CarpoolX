@@ -1,17 +1,19 @@
 import React, {useState, useCallback} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, Modal } from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import StarRating from '../../components/StarRating';
 import { useNavigation,useFocusEffect } from '@react-navigation/native';
+
 
 /**
  *
  * @description api call to register user route
  * @param {*} username
  * @param {*} rating
+ * @param success
  */
-function rateUser(username, rating, callback) {
+function rateUser(username, rating, success) {
 
 }
 
@@ -21,87 +23,48 @@ function rateUser(username, rating, callback) {
  */
 const RateUser = () => {
     const navigation = useNavigation();
-    const [username, setUsername] = useState('');
-    const [rating, setRating] = useState(0);
-    const [showUsernameError, setUsernameError] = useState(false);
-    const [showRatingError, setRatingError] = useState(false);
-    const [showUError, setShowUError] = useState('Please enter name of user');
-    const [showRError, setShowRError] = useState('Please provide a rating');
-    const callback = (option) => {
-        setRating(option);
-    }
-
-    /**
-     * @description Validates the name, email, password and confirm password and calls the register api
-     */
-    const onRatePressed = () => {
-        console.warn(rating)
-        let hasError = false;
-        // ------------------ name validation ------------------
-        if (username === '') {
-        } else {
-
-        }
-        // ------------------ rating validation ------------------
+    const userList = ["rafeed", "allison", "henushan", "lucas"];
 
 
-        // ------------------ rate user ------------------
-        if (!hasError) {
-            rateUser(username, rating, success => {
-                if (success) {
-
-                } else {
-
-                }
-            })
-        }
-    }
 
     /**
      * @description Resets the variables to their initial state if the user navigates away from this screen
      */
     const resetVars = useCallback(() => {
         return () => {
-            setUsername('');
-            setRating(0)
-            setUsernameError(false);
+
         }
     }, [])
     useFocusEffect(resetVars);  // reset the variables when the user navigates away from this screen
     return (
-        <View style={styles.root}>
-            <Text style={styles.title}>Rate a User</Text>
-            <CustomInput
-                placeholder="Username"
-                value={username}
-                setValue={setUsername}
-                type="ionicon"
-                icon="person" />
-            <View style={styles.error}>
-                {showUsernameError && <Text style={styles.error_message}>{showUError}</Text>}
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 30 }}>Rate your fellow riders!</Text>
+            <View style={styles.userL}>
+                {userList.map((name) => (
+                    <CustomButton
+                        text={"Rate " + name}
+                        onPress={() => navigation.navigate('RateModal', {paramKey: name})}
+                        type="PRIMARY"/>
+                ))}
+
             </View>
-            <StarRating
-                parentCallback={callback}/>
-            <View style={styles.error}>
-                {showRatingError && <Text style={styles.error_message}>{showRErrorError}</Text>}
-            </View>
-            <CustomButton
-                text="Rate User"
-                onPress={onRatePressed}
-                type="PRIMARY"/>
         </View>
+
     )
 }
+
+
 
 const styles = StyleSheet.create({
     root: {
         backgroundColor: 'white',
-        flex: 2,
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         padding: 20,
         height: '100%',
         paddingTop: 200,
+        paddingBottom: 400
     },
     title: {
         fontSize: 24,
@@ -117,17 +80,11 @@ const styles = StyleSheet.create({
     link: {
         color: "#3B7CFF",
     },
-    error: {
-        height: 20,
-        width: '100%',
-        alignItems: 'flex-start',
-    },
-    error_message: {
-        color: 'red',
-        fontSize: 12,
-        marginBottom: 5,
-        marginLeft: 10,
-    },
+    userL: {
+        padding:100,
+        display: 'flex',
+        flexDirection: 'column',
+    }
 });
 
 export default RateUser;
