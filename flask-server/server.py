@@ -29,8 +29,8 @@ def login():
     result = account_controller.login(email, password)
     return result
 
-@app.route('/requestride', methods=['POST'])
-def request_ride():
+@app.route('/requestRide', methods=['POST'])
+def requestRide():
     data = request.get_json()
     pickupLoc = data.get('pickuploc')
     destLoc = data.get('destloc')

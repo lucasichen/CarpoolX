@@ -105,12 +105,12 @@ class FirebaseDatabase(FirebaseInit):
         )
         print(user_ref)
 
-    def create_ride(self, pickup, dest, capacity):
+    def create_ride(self, rideid, pickup, dest, capacity):
         """
         Create a ride offer in the database
         """
         ride_offer = (
-            self.db.child("rides").set({"pickup": pickup, "dest": dest, "capacity": capacity})
+            self.db.child("rides").child(rideid).set({"pickup": pickup, "dest": dest, "capacity": capacity})
         )
         print(ride_offer)
         
@@ -166,4 +166,21 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": taxi.val()}
         except Exception as e:
             return {"success": False, "error": str(e)}
-        
+    
+    """
+    Helper functions..
+    """
+    
+    def gen_ride_id(self):
+        ride_id = 1000
+        try:
+            rides = self.db.child("rides").get()
+            print(rides.each())
+            if rides.each() == None:
+                print("here in print")
+                return {"success": True, "data": 1000}
+            for ride in rides.each():
+                ride_id += 1
+            return {"success": True, "data": ride_id + 1}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
