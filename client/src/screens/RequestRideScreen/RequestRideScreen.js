@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native'
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-function sendRide(pickup, dest, capacity){
-  return fetch('http://10.0.2.2:5000/requestride', {
+function sendRide(pickup, dest, capacity, callback){
+  return fetch('http://10.0.2.2:5000/requestRide', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
@@ -19,23 +19,27 @@ function sendRide(pickup, dest, capacity){
           destloc: dest,
           capacity: capacity
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log("The Response was", data)
-      })
-      .catch(error =>{
-        console.error("Error occured ->: ", error)
-      })
-  }
-
-  )
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)
+    if (data.success){
+      console.log("Created Ride")
+      callback(true)
+    }else{
+      callback(false);
+    }
+  })
+  .catch(error =>{
+    console.error("Error occured ->: ", error)
+  })
 }
 
 const RequestRideScreen = () => {
 
     const navigation = useNavigation()
-    const [pickup, setPickup] = useState(null)
-    const [destination, setDestination] = useState(null)
+    const [pickup, setPickup] = useState('')
+    const [destination, setDestination] = useState('')
     const [capacity, setCapacity] = useState('')
 
     const [showPickupError, setPickupError] = useState(false);
@@ -45,13 +49,21 @@ const RequestRideScreen = () => {
 
     const onNextPressed = () => {
         if (pickup && destination) {
-          navigation.navigate('PeopleShare', { pickup, destination })
+          sendRide(pickup, destination, capacity, success => {
+            if (success){
+              console.log("Ride created!")
+              navigation.navigate('PeopleShare', { pickup, destination })
+            }
+            else{
+              console.log("Unable to create ride :(")
+            }
+          });
         }else{
           if (pickup){
             setPickupError(false)
           }
           if (destination){
-            setDestError(true)
+            setDestError(false)
           }
           if (!pickup){
             setPickupError(true)
@@ -62,7 +74,7 @@ const RequestRideScreen = () => {
         }
     }
 
-    console.log(capacity)
+    console.log(typeof capacity)
     return (
         <View>
           <View style={styles.container}>
@@ -73,7 +85,9 @@ const RequestRideScreen = () => {
                 returnKeyType={"search"}
                 minLength={2}
                 onPress={(data, details = null) => {
-                    setPickup(true)
+                  console.log(pickup, typeof pickup)
+                  setPickup(String(data.place_id))
+                  console.log(pickup, typeof pickup)
                 }}
                 enablePoweredByContainer={false}
                 query={{
@@ -95,7 +109,9 @@ const RequestRideScreen = () => {
                 returnKeyType={"search"}
                 minLength={2}
                 onPress={(data, details = null) => {
-                    setDestination(true)
+                  console.log(destination, typeof destination)
+                  setDestination(String(data.place_id))
+                  console.log(destination, typeof destination)
                 }}
                 enablePoweredByContainer={false}
                 query={{
