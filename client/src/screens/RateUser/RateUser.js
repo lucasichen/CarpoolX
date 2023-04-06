@@ -15,7 +15,7 @@ const RateUser = ({route}) => {
                     <CustomButton
                         text={"Rate " + name}
                         onPress={() => navigation.navigate('RateModal', {paramKey: name})}
-                        type="PRIMARY"/>
+                        type="NAME"/>
                 ))}
 
             </View>
