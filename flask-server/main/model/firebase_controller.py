@@ -120,7 +120,7 @@ class FirebaseDatabase(FirebaseInit):
         taxi_data = {
             "dest": dest,
             "capacity": capacity,
-            "passenger_ids": uid,
+            "passenger_ids": [uid],
         }
         print(ride_data, taxi_data)
         try:
@@ -205,5 +205,20 @@ class FirebaseDatabase(FirebaseInit):
                 return {"success": True, "data": ride_id}
             count = len(rides.each())
             return {"success": True, "data": count}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+    
+    def report_user(self, email):
+        """
+        Report a user for bad behaviour
+        """
+        try:
+            users = self.db.child("user").get()
+            for user in users.each():
+                if user.val().get("email") == email:
+                    uid = user.key()
+                    break
+            report = self.db.child("reports").child(uid).set({"email": email})
+            return {"success": True, "data": report}
         except Exception as e:
             return {"success": False, "error": str(e)}

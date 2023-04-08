@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState, useCallback } from 'react'
-import { findTaxi } from './findTaxiScript'
+import { findTaxi, user_information } from './findTaxiScript'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import CustomButton from '../../components/CustomButton'
 
@@ -22,7 +22,15 @@ const TaxiInformationScreen = ({route, navigation}) => {
             console.log('Finding taxi with code: ' + code + '...')
             const taxiInfo = (await findTaxi(code))["data"]
             console.log(taxiInfo["passenger_ids"])
-            setPassengers(taxiInfo["passenger_ids"])
+            // each passenger in the list is an id, so we need to get the name of each passenger
+            const passengerNames = []
+            for (let i = 0; i < taxiInfo["passenger_ids"].length; i++) {
+                const passengerInfo = (await user_information(taxiInfo["passenger_ids"][i]))["data"]
+                let name = passengerInfo["name"]
+                let email = passengerInfo["email"]
+                passengerNames.push((name + " - " + email ))
+            }
+            setPassengers(passengerNames)
             setDestination(taxiInfo["dest"])
             console.log(destination)
             setCapacity(taxiInfo["capacity"])
