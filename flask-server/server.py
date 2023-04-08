@@ -43,6 +43,13 @@ def requestRide():
     result = rideshare_controller.create_ride(uid, pickupLoc, destLoc, capacity)
     return result
     
+@app.route('/getrides', methods=['POST']) 
+def get_ride():
+    data = request.get_json()
+    destloc = data.get('destloc')
+    ride_id = rideshare_controller.get_rides(destloc)
+    return ride_id
+
 @app.route('/user', methods=['GET'])
 def user():
     id_token = request.headers.get('Authorization')

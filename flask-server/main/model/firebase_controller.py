@@ -148,7 +148,24 @@ class FirebaseDatabase(FirebaseInit):
             return False
         except Exception as e:
             return False
-    
+        
+    def get_ride(self, destloc):
+        """
+        Get all rides arriving at destloc
+        """
+        availablerides = {"rides": []}
+        try:
+            ridesavai = self.db.child("rides").get()
+            for ride in ridesavai.each():
+                print("here")
+                print(ride.val().get("dest"))
+                if ride.val().get("dest") == destloc:
+                    availablerides["rides"].append()
+            return availablerides
+        except Exception as e:
+            return {"error": str(e)}
+        
+
     def get_user(self, uid):
         """
         Get user's data from the database
