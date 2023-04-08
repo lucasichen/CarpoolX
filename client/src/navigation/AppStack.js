@@ -6,6 +6,8 @@ import RequestRideScreen from '../screens/RequestRideScreen';
 import TaxiInformationScreen from '../screens/TaxiInformationScreen';
 import ReportScreen from '../screens/ReportScreen';
 import JoinRideScreen from '../screens/JoinRideScreen';
+import PrivateEventScreen from '../screens/PrivateEventScreen/PrivateEventScreen';
+
 // import RateUser from "../screens/RateUserScreen";
 import RideConfirmScreen from '../screens/RideConfirmScreen'
 
@@ -22,6 +24,8 @@ const AppStack = () => {
         <Stack.Screen name="Report" component={ReportScreen} />
         <Stack.Screen name="JoinRide" component={JoinRideScreen} />
         <Stack.Screen name="TaxiInformation" component={TaxiInformationScreen} />
+        <Stack.Screen name="PrivateEvent" component={PrivateEventScreen} />
+
         {/* <Stack.Screen name="RateUser" component={RateUser} /> */}
         <Stack.Screen name="RideConfirm" component={RideConfirmScreen} />
       </Stack.Navigator>
