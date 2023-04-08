@@ -33,7 +33,7 @@ const data = [
 const NavOptions = () => {
     const navigation = useNavigation()
     return (
-      <FlatList 
+      <FlatList
             data={data}
             numColumns={2}
             keyExtractor={(item) => item.id}
@@ -54,7 +54,7 @@ const NavOptions = () => {
       />
     )
   }
-  
+
 const styles = StyleSheet.create({
     container: {
         padding: 5,
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
         height: 25,
     }
 });
-  
+
 
 export default NavOptions
