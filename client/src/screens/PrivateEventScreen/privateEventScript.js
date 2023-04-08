@@ -5,7 +5,7 @@
  * @param {*} callback 
  */
 
-/*
+
 export function verifyUser(email, callback) {
     return fetch('', {
         method: 'POST',
@@ -37,7 +37,7 @@ function sendEvent(location, date, attendees){
         method: 'POST',
         headers: {
             
-        }
+        },
         body: JSON.stringify({
     
         })
