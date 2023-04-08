@@ -26,7 +26,9 @@ const TaxiInformationScreen = ({route, navigation}) => {
             const passengerNames = []
             for (let i = 0; i < taxiInfo["passenger_ids"].length; i++) {
                 const passengerInfo = (await user_information(taxiInfo["passenger_ids"][i]))["data"]
-                passengerNames.push(passengerInfo["name"])
+                let name = passengerInfo["name"]
+                let email = passengerInfo["email"]
+                passengerNames.push((name + " - " + email ))
             }
             setPassengers(passengerNames)
             setDestination(taxiInfo["dest"])

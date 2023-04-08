@@ -46,7 +46,7 @@ export const user_information = async(uid, callback) => {
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            console.log('User found');
+            console.log('User found', data);
             return data
         } else {
             console.log('User not found');
