@@ -129,7 +129,8 @@ const ProfileScreen = () => {
                     value={name}
                     setValue={setName} 
                     type="ionicon"
-                    icon="person" />
+                    icon="person"
+                    editable={false}/>
                 <CustomInput
                     placeholder="Age"
                     value={age}

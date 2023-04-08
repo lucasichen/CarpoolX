@@ -2,8 +2,11 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabNavigator from './TabNavigator';
-import RequestRideScreen from '../screens/RequestRideScreen/RequestRideScreen';
-import RateUser from "../screens/RateUserScreen";
+import RequestRideScreen from '../screens/RequestRideScreen';
+import TaxiInformationScreen from '../screens/TaxiInformationScreen';
+import ReportScreen from '../screens/ReportScreen';
+import JoinRideScreen from '../screens/JoinRideScreen';
+// import RateUser from "../screens/RateUserScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +18,10 @@ const AppStack = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home_Tab" component={TabNavigator} />
         <Stack.Screen name="RequestRide" component={RequestRideScreen} />
-        <Stack.Screen name="RateUser" component={RateUser} />
+        <Stack.Screen name="Report" component={ReportScreen} />
+        <Stack.Screen name="JoinRide" component={JoinRideScreen} />
+        <Stack.Screen name="TaxiInformation" component={TaxiInformationScreen} />
+        {/* <Stack.Screen name="RateUser" component={RateUser} /> */}
       </Stack.Navigator>
   )
 }
