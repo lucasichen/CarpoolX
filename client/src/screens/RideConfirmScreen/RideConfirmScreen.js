@@ -17,31 +17,45 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 const RideConfirmScreen = () => {
 
+    function startRide(pickup, dest, capacity, callback){
+        return fetch('http://10.0.2.2:5000/requestRide', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                pickuploc: pickup,
+                destloc: dest,
+                capacity: capacity
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if (data.success){
+            console.log("Created Ride")
+            callback(true, data.data)
+          }else{
+            callback(false);
+          }
+        })
+        .catch(error =>{
+          console.error("Error occured ->: ", error)
+        })
+      }
+
+    const onStartPressed = () => {
+        startRide(pickupLocation, destinationLocation, capacity, success)
+    }
+
     const route = useRoute();
-    const {originGeo, destGeo } = route.params
+    const {originGeo, destGeo, pickupLocation, destinationLocation, capacity} = route.params
     const origin = { latitude: originGeo.lat, longitude: originGeo.lng}
     const destination = { latitude: destGeo.lat, longitude: destGeo.lng}
 
     const [distance, setDistance] = useState(0)
     const [duration, setDuration] = useState(0)
-    
-    const priceFare = (3 + (0.81*distance)).toFixed(2)
-
-    /*
-    const originApi = String(originGeo.lat) + "," +  String(originGeo.lng)
-    const destApi = String(destGeo.lat) + "," + String(destGeo.lng)
-
-    const DirectionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${originApi}&destination=${destApi}&key=${REACT_NATIVE_GOOGLE_MAPS_APIKEY}`
-
-    fetch(DirectionsUrl)
-        .then((res) => res.json())
-        .then((resJson) => {
-            console.log(resJson.routes.legs.duration.text);
-        })
-        .catch((err) => {
-            console.error(err)
-        })
-    */
+    const priceFare = (5 + (0.81*distance) + 0.4*duration).toFixed(2) 
 
     const mapRef = useRef(null);
 
@@ -117,7 +131,7 @@ const RideConfirmScreen = () => {
             <View style={styles.start_button}>
                 <CustomButton
                     text="Start Ride"
-                    //onPress={onStartRide}
+                    onPress={onStartPressed}
                     type="PRIMARY"
                 />
             </View>
