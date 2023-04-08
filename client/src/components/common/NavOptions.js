@@ -44,8 +44,7 @@ const NavOptions = () => {
                     <View>
                         <Image
                             style={[styles.flatlist_image, item.title === 'Join ride' && styles.joinRideImage, item.title === 'Report Person' && styles.reportPersonImage]}
-                            source={{ uri: item.image }}
-                        />
+                            source={{ uri: item.image }} />
                     </View>
                     <Text style={styles.title}>{item.title}</Text>
                     <Icon style={styles.arrow} type="ant" name="arrowright"/>
