@@ -2,8 +2,6 @@ import react, { useState, useEffect } from "react";
 import {StyleSheet, View, SafeAreaView, Dimensions, Text, PermissionsAndroid, Button } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import CustomButton from "../CustomButton/CustomButton";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const {width, height} = Dimensions.get('window')
 
