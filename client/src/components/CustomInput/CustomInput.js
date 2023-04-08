@@ -13,7 +13,7 @@ import Icon from '../common/Icon';
  * @param {*} icon for icon name
  * @returns 
  */
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, type, icon}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry, type, icon, editable}) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     /**
@@ -32,7 +32,8 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, type, icon}
                 onChangeText={setValue}
                 placeholder={placeholder}
                 style={styles.input}
-                secureTextEntry={secureTextEntry && !isPasswordVisible} />
+                secureTextEntry={secureTextEntry && !isPasswordVisible}
+                editable={editable}/>
             <Icon style={styles.password_icon} />
             {secureTextEntry && (
                 <Icon
