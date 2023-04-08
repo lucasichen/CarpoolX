@@ -5,11 +5,11 @@ import RegisterScreen from '../screens/RegisterScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import TermsOfUseScreen from '../screens/TermsOfUseScreen';
 import AppStack from './AppStack';
-import RateModal from "../screens/RateModal";
+import RateModal from "../screens/RateModalScreen";
 
 const Stack = createNativeStackNavigator();
 
-/** 
+/**
  * @description This is the main navigation component. It contains all the screens that are available in the app.
  */
 const AuthStack = () => {

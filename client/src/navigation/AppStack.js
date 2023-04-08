@@ -3,11 +3,11 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabNavigator from './TabNavigator';
 import RequestRideScreen from '../screens/RequestRideScreen/RequestRideScreen';
-import RateUser from "../screens/RateUser";
+import RateUser from "../screens/RateUserScreen";
 
 const Stack = createNativeStackNavigator();
 
-/** 
+/**
  * @description This is the main navigation component. It contains all the screens that are available in the app.
  */
 const AppStack = () => {
