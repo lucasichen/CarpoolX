@@ -17,104 +17,103 @@ const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 const RideConfirmScreen = () => {
-    const onStartPressed = async () => {
-        let tokens = await retrieveTokens()
-        startRide(tokens.idToken, pickupLocation, destinationLocation, capacity)
-    }
+  const route = useRoute();
+  const {originGeo, destGeo, pickup, destination, capacity} = route.params
+  const origin = { latitude: originGeo.lat, longitude: originGeo.lng}
+  const destinationL = { latitude: destGeo.lat, longitude: destGeo.lng}
+  const [distance, setDistance] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const priceFare = (5 + (0.81*distance) + 0.4*duration).toFixed(2) 
 
-    const route = useRoute();
-    const {originGeo, destGeo, pickupLocation, destinationLocation, capacity} = route.params
-    const origin = { latitude: originGeo.lat, longitude: originGeo.lng}
-    const destination = { latitude: destGeo.lat, longitude: destGeo.lng}
+  const mapRef = useRef(null);
 
-    const [distance, setDistance] = useState(0)
-    const [duration, setDuration] = useState(0)
-    const priceFare = (5 + (0.81*distance) + 0.4*duration).toFixed(2) 
+  const onStartPressed = async () => {
+    let tokens = await retrieveTokens()
+    startRide(tokens.idToken, pickup, destination, capacity)
+  }
 
-    const mapRef = useRef(null);
+  useEffect(() => {
+      if (!origin || !destinationL) return;
+      mapRef.current.fitToSuppliedMarkers(["origin","destinationL"], {
+          edgePadding: {top: 50, right: 50, bottom: 50, left: 50}
+      });
+  }, [origin, destinationL])
 
-    useEffect(() => {
-        if (!origin || !destination) return;
-        mapRef.current.fitToSuppliedMarkers(["origin","destination"], {
-            edgePadding: {top: 50, right: 50, bottom: 50, left: 50}
-        });
-    }, [origin, destination])
+  return (
+      <SafeAreaView>
+          <View style={styles.container}>
+          <MapView
+              ref={mapRef}
+              style={styles.mapStyle}
+              customMapStyle={mapStyle}
+              initialRegion={{
+                  latitude: origin.latitude,
+                  longitude: origin.longitude,
+                  latitudeDelta: 0.005,
+                  longitudeDelta: 0.005,
+              }}
+          >
+              <MapViewDirections
+                  origin={origin}
+                  destination={destinationL}
+                  apikey={REACT_NATIVE_GOOGLE_MAPS_APIKEY}
+                  strokeWidth={5}
+                  strokeColor='#3B7CFF'
+                  onReady={ result => {
+                      setDistance(result.distance.toFixed(1))
+                      setDuration(result.duration.toFixed(0))
+                  }}
+              />
+              <Marker
+                  coordinate={{
+                      latitude: origin.latitude,
+                      longitude: origin.longitude
+                  }}
+                  title="Origin"
+                  identifier="origin"                
+              />
 
-    return (
-        <SafeAreaView>
-            <View style={styles.container}>
-            <MapView
-                ref={mapRef}
-                style={styles.mapStyle}
-                customMapStyle={mapStyle}
-                initialRegion={{
-                    latitude: origin.latitude,
-                    longitude: origin.longitude,
-                    latitudeDelta: 0.005,
-                    longitudeDelta: 0.005,
-                }}
-            >
-                <MapViewDirections
-                    origin={origin}
-                    destination={destination}
-                    apikey={REACT_NATIVE_GOOGLE_MAPS_APIKEY}
-                    strokeWidth={5}
-                    strokeColor='red'
-                    onReady={ result => {
-                        setDistance(result.distance.toFixed(1))
-                        setDuration(result.duration.toFixed(0))
-                    }}
-                />
-                <Marker
-                    coordinate={{
-                        latitude: origin.latitude,
-                        longitude: origin.longitude
-                    }}
-                    title="Origin"
-                    identifier="origin"                
-                />
+              <Marker
+                  coordinate={{
+                      latitude: destinationL.latitude,
+                      longitude: destinationL.longitude
+                  }}
+                  title="Origin"
+                  identifier="destinationL"                
+              />
 
-                <Marker
-                    coordinate={{
-                        latitude: destination.latitude,
-                        longitude: destination.longitude
-                    }}
-                    title="Origin"
-                    identifier="destination"                
-                />
-
-            </MapView> 
-            </View>
-            <View style={styles.tripInfo}>
-                <Image
-                    source={{uri:'https://links.papareact.com/3pn'}}
-                    style = {styles.imagestyle}
-                />
-                <View style={styles.container_text}>
-                    <Text style={styles.textStyle}>
-                        Duration: {duration} min
-                    </Text>
-                    <Text style={styles.textStyle}>
-                        Distance: {distance} km
-                    </Text>
-                    <Text style={styles.textStyle}>
-                        Total Fare Price: ${priceFare}
-                    </Text>
-                </View> 
-            </View>
-            <View style={styles.start_button}>
-                <CustomButton
-                    text="Start Ride"
-                    onPress={onStartPressed}
-                    type="PRIMARY"
-                />
-            </View>
-        </SafeAreaView>
+          </MapView> 
+          </View>
+          <View style={styles.tripInfo}>
+              <Image
+                  source={{uri:'https://links.papareact.com/3pn'}}
+                  style = {styles.imagestyle}
+              />
+              <View style={styles.container_text}>
+                  <Text style={styles.textStyle}>
+                      Duration: {duration} min
+                  </Text>
+                  <Text style={styles.textStyle}>
+                      Distance: {distance} km
+                  </Text>
+                  <Text style={styles.textStyle}>
+                      Total Fare Price: ${priceFare}
+                  </Text>
+              </View> 
+          </View>
+          <View style={styles.start_button}>
+              <CustomButton
+                  text="Start Ride"
+                  onPress={onStartPressed}
+                  type="PRIMARY"
+              />
+          </View>
+      </SafeAreaView>
         
     )
 }
 
-export default RideConfirmScreen
+
 
 const mapStyle = [
     {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
@@ -239,3 +238,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 80
   }
 });
+
+export default RideConfirmScreen

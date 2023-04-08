@@ -109,16 +109,30 @@ class FirebaseDatabase(FirebaseInit):
         """
         Create a ride offer in the database
         """
+        print(pickup, dest)
+        ride_data = {
+            "taxi_id": taxi_id,
+            "pickup": pickup,
+            "dest": dest,
+            "capacity": capacity,
+            "user_id": uid,
+        }
+        taxi_data = {
+            "dest": dest,
+            "capacity": capacity,
+            "passenger_ids": uid,
+        }
+        print(ride_data, taxi_data)
         try:
             ride_offer = (
-                self.db.child("rides").child(ride_id).set({"taxi_id": taxi_id,"pickup": pickup, "dest": dest, "capacity": capacity, "user_id": uid})
+                self.db.child("rides").child(ride_id).set(ride_data)
             )
             print(ride_offer)
-            taxi_data = {
-                self.db.child("taxi").child(taxi_id).set({"taxi_id": taxi_id, "dest": dest, "capacity": capacity, "passenger_ids": uid})
+            taxi_info = {
+                self.db.child("taxi").child(taxi_id).set(taxi_data)
             }
-            print(taxi_data)
-            return {"success": True, "data": {'ride_offer': ride_offer, 'taxi_data': taxi_data}}
+            print(taxi_info)
+            return {"success": True, "data": {'ride_offer': ride_offer, 'taxi_data': taxi_info}}
         except Exception as e:
             return {"success": False, "error": str(e)}
         
@@ -170,7 +184,9 @@ class FirebaseDatabase(FirebaseInit):
         Get taxi's data from the database
         """
         try:
+            print(taxi_id)
             taxi = self.db.child("taxi").child(taxi_id).get()
+            print(taxi)
             return {"success": True, "data": taxi.val()}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -179,18 +195,15 @@ class FirebaseDatabase(FirebaseInit):
         """
         Helper functions to generate ride id
         """
-        ride_id = 1000
+        ride_id = 1
         try:
             try:
                 rides = self.db.child("rides").get()
             except Exception as e:
                 return {"success": True, "data": ride_id}
-            print(rides.each())
             if rides.each() == None:
-                print("here in print")
-                return {"success": True, "data": 1000}
-            for ride in rides.each():
-                ride_id += 1
-            return {"success": True, "data": ride_id + 1}
+                return {"success": True, "data": ride_id}
+            count = len(rides.each())
+            return {"success": True, "data": count}
         except Exception as e:
             return {"success": False, "error": str(e)}
