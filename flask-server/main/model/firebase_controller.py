@@ -105,14 +105,22 @@ class FirebaseDatabase(FirebaseInit):
         )
         print(user_ref)
 
-    def create_ride(self, rideid, pickup, dest, capacity):
+    def create_ride(self, uid, ride_id, taxi_id, pickup, dest, capacity):
         """
         Create a ride offer in the database
         """
-        ride_offer = (
-            self.db.child("rides").child(rideid).set({"pickup": pickup, "dest": dest, "capacity": capacity})
-        )
-        print(ride_offer)
+        try:
+            ride_offer = (
+                self.db.child("rides").child(ride_id).set({"taxi_id": taxi_id,"pickup": pickup, "dest": dest, "capacity": capacity, "user_id": uid})
+            )
+            print(ride_offer)
+            taxi_data = {
+                self.db.child("taxi").child(taxi_id).set({"taxi_id": taxi_id, "dest": dest, "capacity": capacity, "passenger_ids": uid})
+            }
+            print(taxi_data)
+            return {"success": True, "data": {'ride_offer': ride_offer, 'taxi_data': taxi_data}}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
         
     def user_exists(self, email):
         """
@@ -167,14 +175,16 @@ class FirebaseDatabase(FirebaseInit):
         except Exception as e:
             return {"success": False, "error": str(e)}
     
-    """
-    Helper functions..
-    """
-    
     def gen_ride_id(self):
+        """
+        Helper functions to generate ride id
+        """
         ride_id = 1000
         try:
-            rides = self.db.child("rides").get()
+            try:
+                rides = self.db.child("rides").get()
+            except Exception as e:
+                return {"success": True, "data": ride_id}
             print(rides.each())
             if rides.each() == None:
                 print("here in print")
