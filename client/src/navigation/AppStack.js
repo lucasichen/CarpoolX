@@ -8,9 +8,12 @@ import ReportScreen from '../screens/ReportScreen';
 import JoinRideScreen from '../screens/JoinRideScreen';
 import PrivateEventScreen from '../screens/PrivateEventScreen/PrivateEventScreen';
 
+// import RateUser from "../screens/RateUserScreen";
+import RideConfirmScreen from '../screens/RideConfirmScreen'
+
 const Stack = createNativeStackNavigator();
 
-/** 
+/**
  * @description This is the main navigation component. It contains all the screens that are available in the app.
  */
 const AppStack = () => {
@@ -22,6 +25,9 @@ const AppStack = () => {
         <Stack.Screen name="JoinRide" component={JoinRideScreen} />
         <Stack.Screen name="TaxiInformation" component={TaxiInformationScreen} />
         <Stack.Screen name="PrivateEvent" component={PrivateEventScreen} />
+
+        {/* <Stack.Screen name="RateUser" component={RateUser} /> */}
+        <Stack.Screen name="RideConfirm" component={RideConfirmScreen} />
       </Stack.Navigator>
   )
 }

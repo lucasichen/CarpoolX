@@ -5,14 +5,16 @@
  * @param {*} callback 
  * @returns 
  */
-export const findTaxi = (taxiCode, callback) => {
-    return fetch('http://10.0.0.2:5000/taxi/information', {
+export const findTaxi = async(taxiCode, callback) => {
+    const code = await taxiCode
+    console.log('attempting to find taxi with code: ', code)
+    return fetch('http://10.0.2.2:5000/taxi/information', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            taxiCode: taxiCode
+            taxi_id: code
         })
     })
     .then(res => res.json())

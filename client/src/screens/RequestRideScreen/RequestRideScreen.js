@@ -1,42 +1,22 @@
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, SectionList } from 'react-native'
 import React, {useState} from 'react'
 import GoogleMaps from '../../components/Maps/GoogleMaps'
 import CustomButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
-import DropdownMenu from '../../components/DropdownMenu'
 import { useNavigation } from '@react-navigation/native'
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-function sendRide(pickup, dest, capacity){
-  return fetch('http://10.0.2.2:5000/requestride', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          pickuploc: pickup,
-          destloc: dest,
-          capacity: capacity
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log("The Response was", data)
-      })
-      .catch(error =>{
-        console.error("Error occured ->: ", error)
-      })
-  }
 
-  )
-}
 
 const RequestRideScreen = () => {
 
     const navigation = useNavigation()
-    const [pickup, setPickup] = useState(null)
-    const [destination, setDestination] = useState(null)
+    const [pickup, setPickup] = useState('')
+    const [destination, setDestination] = useState('')
     const [capacity, setCapacity] = useState('')
+    const [originGeo, setOriginGeo] = useState(null)
+    const [destGeo, setDestGeo] = useState(null)
 
     const [showPickupError, setPickupError] = useState(false);
     const [showDestError, setDestError] = useState(false);
@@ -45,13 +25,13 @@ const RequestRideScreen = () => {
 
     const onNextPressed = () => {
         if (pickup && destination) {
-          navigation.navigate('PeopleShare', { pickup, destination })
+          navigation.navigate('RideConfirm', { originGeo, destGeo, pickup, destination, capacity })
         }else{
           if (pickup){
             setPickupError(false)
           }
           if (destination){
-            setDestError(true)
+            setDestError(false)
           }
           if (!pickup){
             setPickupError(true)
@@ -61,28 +41,29 @@ const RequestRideScreen = () => {
           }
         }
     }
-
-    console.log(capacity)
     return (
         <View>
           <View style={styles.container}>
-            <GooglePlacesAutocomplete
-                placeholder= {'Pick Up Location'}
-                styles={styles}
-                fetchDetails={true}
-                returnKeyType={"search"}
-                minLength={2}
-                onPress={(data, details = null) => {
-                    setPickup(true)
-                }}
-                enablePoweredByContainer={false}
-                query={{
-                    key: REACT_NATIVE_GOOGLE_MAPS_APIKEY,
-                    language: 'en',
-                }}
-                nearbyPlacesAPI='GooglePlacesSearch'
-                debounce={400}
-            />
+            <View>
+              <GooglePlacesAutocomplete
+                  placeholder= {'Pick Up Location'}
+                  styles={styles}
+                  fetchDetails={true}
+                  returnKeyType={"search"}
+                  minLength={2}
+                  onPress={(data, details = null) => {
+                    setPickup(String(data.place_id))
+                    setOriginGeo(details.geometry.location)
+                  }}
+                  enablePoweredByContainer={false}
+                  query={{
+                      key: REACT_NATIVE_GOOGLE_MAPS_APIKEY,
+                      language: 'en',
+                  }}
+                  nearbyPlacesAPI='GooglePlacesSearch'
+                  debounce={400}
+              />
+            </View>
             <View style={styles.errorContainer}>
               {showPickupError && <Text style={styles.errorMsg}>{errorMsg}</Text>}
             </View>
@@ -95,7 +76,8 @@ const RequestRideScreen = () => {
                 returnKeyType={"search"}
                 minLength={2}
                 onPress={(data, details = null) => {
-                    setDestination(true)
+                  setDestination(String(data.place_id))
+                  setDestGeo(details.geometry.location)
                 }}
                 enablePoweredByContainer={false}
                 query={{
@@ -119,10 +101,9 @@ const RequestRideScreen = () => {
               />
             </View>
           </View>
-          
           <GoogleMaps />
           <CustomButton 
-            text='Next'
+            text='Confirm'
             onPress={onNextPressed}
             type="RIDE"
           />

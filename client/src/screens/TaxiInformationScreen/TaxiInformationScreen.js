@@ -11,18 +11,24 @@ import CustomButton from '../../components/CustomButton'
  * @returns 
  */
 const TaxiInformationScreen = ({route, navigation}) => {
-    const { code } = route.params;
+    const {code}  = route.params;
     const [taxCode, setTaxCode] = useState(code)
     const [passengers, setPassengers] = useState(['...'])
     const [destination, setDestination] = useState('...')
+    const [capacity, setCapacity] = useState('...')
 
     useEffect(() => {
-        const getTaxiInfo = async () => {
-            const taxiInfo = await findTaxi(taxCode)
-            setPassengers(taxiInfo.passengers)
-            setDestination(taxiInfo.destination)
-        }
-    }, [])
+        const fetchData = async () => {
+            console.log('Finding taxi with code: ' + code + '...')
+            const taxiInfo = (await findTaxi(code))["data"]
+            console.log(taxiInfo["passenger_ids"])
+            setPassengers(taxiInfo["passenger_ids"])
+            setDestination(taxiInfo["dest"])
+            console.log(destination)
+            setCapacity(taxiInfo["capacity"])
+        };
+        fetchData();
+      }, []);
 
     /**
      * @description Resets the variables to their initial state if the user navigates away from this screen
@@ -40,17 +46,19 @@ const TaxiInformationScreen = ({route, navigation}) => {
                 <Text style={styles.title}>Taxi ID #{code}</Text>
                 <View style={styles.container_sublist}>
                     <Text style={styles.subtitle}>Passengers</Text>
-                    <Text style={styles.item}>
-                        {passengers.map((passenger, index) => {
+                    <Text style={styles.item}> {passengers}
+                        {/* {passengers.map((passenger, index) => {
                             return (
                                 <Text style={styles.item} key={index}>{passenger}</Text>
                             )
-                        })}
+                        })} */}
                     </Text>
                 </View>
                 <View style={styles.container_sublist}>
                     <Text style={styles.subtitle}>Where To</Text>
                     <Text style={styles.item}>{destination}</Text>
+                    <Text style={styles.subtitle}>Capacity</Text>
+                    <Text style={styles.item}>{capacity}</Text>
                 </View>
             </View>
             <View style={styles.container_join}>

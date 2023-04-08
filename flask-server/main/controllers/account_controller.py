@@ -53,6 +53,17 @@ class AccountController:
         except Exception as e:
             return {"success": False, "error": "can't get user account - "+str(e)}
     
+    def get_uid(self, id_token):
+        """
+        Gets the user details from the Firebase Auth
+        """
+        try:
+            response = self.firebase_auth.get_account_info(id_token)
+            uid = response["data"]["users"][0]["localId"]
+            return uid if response["success"] else {"success": False, "error": "can't get user account"}
+        except Exception as e:
+            return {"success": False, "error": "can't get user account - "+str(e)}
+
     def refresh(self, refresh_token):
         """
         Refreshes the id token

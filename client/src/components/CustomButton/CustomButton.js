@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#3B7CFF',
         marginTop: 40,
     },
+    container_NAME: {
+        width: 300,
+        height: 50,
+        backgroundColor: '#3B7CFF',
+    },
     text: {
         color: 'white',
         fontWeight: 'bold',

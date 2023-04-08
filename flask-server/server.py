@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
 from main.controllers.account_controller import AccountController
+from main.controllers.rideshare_controller import RideshareController
+from main.controllers.taxi_controller import TaxiController
 
 # initialize the flask app
 app = Flask(__name__)
 
 # initialize the account controller with the firebase service account key
 account_controller = AccountController()
+rideshare_controller = RideshareController()
+taxi_controller = TaxiController()
 
 # Signup API route
 @app.route('/register', methods=['POST'])
@@ -27,13 +31,17 @@ def login():
     result = account_controller.login(email, password)
     return result
 
-@app.route('/requestride', methods=['POST'])
-def request_ride():
+@app.route('/requestRide', methods=['POST'])
+def requestRide():
+    id_token = request.headers.get('Authorization')
+    # wait till user is verified by getting uid from id_token
+    uid = account_controller.get_uid(id_token)
     data = request.get_json()
     pickupLoc = data.get('pickuploc')
     destLoc = data.get('destloc')
     capacity = data.get('capacity')
-    pass
+    result = rideshare_controller.create_ride(uid, pickupLoc, destLoc, capacity)
+    return result
     
 @app.route('/user', methods=['GET'])
 def user():
@@ -61,7 +69,8 @@ def delete_user():
 def taxi_information():
     data = request.get_json()
     taxi_id = data.get('taxi_id')
-    result = account_controller.taxi_information(taxi_id)
+    print("taxi_id: ", taxi_id)
+    result = taxi_controller.taxi_information(taxi_id)
     return result
 
 @app.route('/user/report', methods=['POST'])

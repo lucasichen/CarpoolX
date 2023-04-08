@@ -33,7 +33,7 @@ const data = [
 const NavOptions = () => {
     const navigation = useNavigation()
     return (
-      <FlatList 
+      <FlatList
             data={data}
             numColumns={2}
             keyExtractor={(item) => item.id}
@@ -44,8 +44,7 @@ const NavOptions = () => {
                     <View>
                         <Image
                             style={[styles.flatlist_image, item.title === 'Join ride' && styles.joinRideImage, item.title === 'Report Person' && styles.reportPersonImage]}
-                            source={{ uri: item.image }}
-                        />
+                            source={{ uri: item.image }} />
                     </View>
                     <Text style={styles.title}>{item.title}</Text>
                     <Icon style={styles.arrow} type="ant" name="arrowright"/>
@@ -54,7 +53,7 @@ const NavOptions = () => {
       />
     )
   }
-  
+
 const styles = StyleSheet.create({
     container: {
         padding: 5,
@@ -99,6 +98,6 @@ const styles = StyleSheet.create({
         height: 25,
     }
 });
-  
+
 
 export default NavOptions

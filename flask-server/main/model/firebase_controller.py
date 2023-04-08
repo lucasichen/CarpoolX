@@ -105,14 +105,36 @@ class FirebaseDatabase(FirebaseInit):
         )
         print(user_ref)
 
-    def create_ride(self, pickup, dest, capacity):
+    def create_ride(self, uid, ride_id, taxi_id, pickup, dest, capacity):
         """
         Create a ride offer in the database
         """
-        ride_offer = (
-            self.db.child("rides").set({"pickup": pickup, "dest": dest, "capacity": capacity})
-        )
-        print(ride_offer)
+        print(pickup, dest)
+        ride_data = {
+            "taxi_id": taxi_id,
+            "pickup": pickup,
+            "dest": dest,
+            "capacity": capacity,
+            "user_id": uid,
+        }
+        taxi_data = {
+            "dest": dest,
+            "capacity": capacity,
+            "passenger_ids": uid,
+        }
+        print(ride_data, taxi_data)
+        try:
+            ride_offer = (
+                self.db.child("rides").child(ride_id).set(ride_data)
+            )
+            print(ride_offer)
+            taxi_info = {
+                self.db.child("taxi").child(taxi_id).set(taxi_data)
+            }
+            print(taxi_info)
+            return {"success": True, "data": {'ride_offer': ride_offer, 'taxi_data': taxi_info}}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
         
     def user_exists(self, email):
         """
@@ -162,8 +184,26 @@ class FirebaseDatabase(FirebaseInit):
         Get taxi's data from the database
         """
         try:
+            print(taxi_id)
             taxi = self.db.child("taxi").child(taxi_id).get()
+            print(taxi)
             return {"success": True, "data": taxi.val()}
         except Exception as e:
             return {"success": False, "error": str(e)}
-        
+    
+    def gen_ride_id(self):
+        """
+        Helper functions to generate ride id
+        """
+        ride_id = 1
+        try:
+            try:
+                rides = self.db.child("rides").get()
+            except Exception as e:
+                return {"success": True, "data": ride_id}
+            if rides.each() == None:
+                return {"success": True, "data": ride_id}
+            count = len(rides.each())
+            return {"success": True, "data": count}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
