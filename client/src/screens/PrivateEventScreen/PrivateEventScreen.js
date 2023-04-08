@@ -4,6 +4,7 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
+import {sendEvent, verifyUser} from './privateEventScript'
 
 const PrivateEventScreen = () => {
     const navigation = useNavigation();
@@ -15,6 +16,9 @@ const PrivateEventScreen = () => {
     const [actionType, setActionType] = useState('');
     const [emails, setEmails] = useState([]);
     const [counter, setCounter] = useState(0);
+    const [showEmailError, setShowEmailError] = useState(false);
+    const [date, setDate] = useState('');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleEnter = () => {
         setActionType('event');
@@ -22,14 +26,21 @@ const PrivateEventScreen = () => {
     }
 
     const handleNext = () => {
+        setShowEmailError(false);
         if(counter < attendees) {
-            const newEmail = emails.concat(email);
-            setEmails(newEmail);
-            setEmail('');
+            setMaxVisible(false);
+            // ----- checking they entered emails ----
+            if (!emailRegex.test(email)) {
+                setShowEmailError(true);
+            } else {
+                const newEmail = emails.concat(email);
+                setEmails(newEmail);
+                setEmail('');
+                setCounter(counter => counter + 1);
+            }
         } else {
             setMaxVisible(true);
         }
-        setCounter(counter => counter + 1);
     }
 
     const handleDismiss = () => {
@@ -38,11 +49,14 @@ const PrivateEventScreen = () => {
 
     const handleConfirm = () => {
         setConfirmationVisible(false);
+        setDate('')
+        setAttendees('')
+        setEmails([])
         //save the event to the database 
-        //seperate the emails
+        sendEvent(location, date, attendees)
+        //Handle notifcation generation and user checking
 
     }
-
 
     return (
         <View style={styles.root}>
@@ -55,6 +69,17 @@ const PrivateEventScreen = () => {
             }
             <Text style={[styles.title, {paddingTop: 40}]}>Event information</Text>
             <View style={styles.attendInfo}>
+                <Text>
+                    Enter the date and time of the event
+                </Text>
+                <CustomInput
+                    placeholder="Date"
+                    value={date}
+                    setValue={setDate}
+                />
+                <Text>
+                   This will have the location 
+                </Text>
                 <Text>
                     How many people will require ride service
                 </Text>
@@ -74,7 +99,8 @@ const PrivateEventScreen = () => {
                 <Text style={styles.text}>
                     Please note that only attendees who have a registered account will be able to use the service
                 </Text>
-                {isMaxVisible && <Text>Maximum number of attendee emails received</Text>}
+                {isMaxVisible && <Text style={styles.errorMsg}>Maximum number of attendee emails received</Text>}
+                {showEmailError && <Text style={styles.errorMsg}>Invalid email</Text>}
             </View>
                 <CustomButton 
                     text="Next"
@@ -108,9 +134,9 @@ const styles = StyleSheet.create({
     attendInfo: {
         width: '100%',
         alignItems: 'center',
-        height: 300,
+        height: 380,
         padding: 20,
-        paddingTop: 40,
+        paddingTop: 20,
     },
     title: {
         fontSize: 24,
@@ -128,7 +154,11 @@ const styles = StyleSheet.create({
         color: "#000000",
         margin: 10,
 
-    }
+    },
+    errorMsg: {
+        color: 'red',
+        fontSize: 12,
+      },
 
 });
 
