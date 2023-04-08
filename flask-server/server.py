@@ -31,11 +31,14 @@ def login():
 
 @app.route('/requestRide', methods=['POST'])
 def requestRide():
+    id_token = request.headers.get('Authorization')
+    # wait till user is verified by getting uid from id_token
+    uid = account_controller.get_uid(id_token)
     data = request.get_json()
     pickupLoc = data.get('pickuploc')
     destLoc = data.get('destloc')
     capacity = data.get('capacity')
-    result = rideshare_controller.create_ride(pickupLoc, destLoc, capacity)
+    result = rideshare_controller.create_ride(uid, pickupLoc, destLoc, capacity)
     return result
     
 @app.route('/user', methods=['GET'])

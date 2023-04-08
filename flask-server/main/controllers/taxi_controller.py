@@ -13,8 +13,8 @@ class TaxiController:
         Gets the taxi information
         """
         try:
-            taxi = self.firebase_db.get_taxi(taxi_id)
-            return taxi if taxi["success"] else {"success": False, "error": taxi["error"]}
+            resp = self.firebase_db.get_taxi(taxi_id)
+            return resp if resp["success"] else {"success": False, "error": resp["error"]}
         except Exception as e:
             return {"success": False, "error": "can't get taxi information - "+str(e)}
         

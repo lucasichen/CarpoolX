@@ -5,6 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import MapViewDirections from 'react-native-maps-directions';
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import CustomButton from '../../components/CustomButton/CustomButton';
+import { startRide, retrieveTokens } from './startRideScript';
 
 
 const {width, height} = Dimensions.get('window')
@@ -16,36 +17,9 @@ const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 const RideConfirmScreen = () => {
-
-    function startRide(pickup, dest, capacity, callback){
-        return fetch('http://10.0.2.2:5000/requestRide', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                pickuploc: pickup,
-                destloc: dest,
-                capacity: capacity
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          if (data.success){
-            console.log("Created Ride")
-            callback(true, data.data)
-          }else{
-            callback(false);
-          }
-        })
-        .catch(error =>{
-          console.error("Error occured ->: ", error)
-        })
-      }
-
-    const onStartPressed = () => {
-        startRide(pickupLocation, destinationLocation, capacity, success)
+    const onStartPressed = async () => {
+        let tokens = await retrieveTokens()
+        startRide(tokens.idToken, pickupLocation, destinationLocation, capacity)
     }
 
     const route = useRoute();
