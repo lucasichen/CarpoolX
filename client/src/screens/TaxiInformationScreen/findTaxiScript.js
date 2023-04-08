@@ -30,3 +30,29 @@ export const findTaxi = async(taxiCode, callback) => {
         callback(false);
     });
 }
+
+export const user_information = async(uid, callback) => {
+    const id = await uid
+    console.log('attempting to find user with id: ', id)
+    return fetch('http://10.0.2.2:5000/user/info', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id: id
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            console.log('User found');
+            return data
+        } else {
+            console.log('User not found');
+            callback(false);
+        }}).catch(err => {
+        console.log('error: ',err);
+        callback(false);
+    });
+}

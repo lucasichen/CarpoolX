@@ -100,3 +100,25 @@ class AccountController:
             return data if data["success"] else {"success": False, "error": data["error"]}
         except Exception as e:
             return {"success": False, "error": "can't delete user account - "+str(e)}
+    
+    def report_user(self, email):
+        """
+        Reports the user to the Firebase Auth
+        """
+        try:
+            print('requesting to report user with email:', email)
+            response = self.firebase_db.report_user(email)
+            return response if response["success"] else {"success": False, "error": response["error"]}
+        except Exception as e:
+            return {"success": False, "error": "can't report user account - "+str(e)}
+
+    def get_name_email(self, uid):
+        """
+        Gets the user details from the Firebase Auth
+        """
+        try:
+            user = self.firebase_db.get_user(uid)
+            print('user:', user)
+            return user if user["success"] else {"success": False, "error": user["error"]}
+        except Exception as e:
+            return {"success": False, "error": "can't get user account - "+str(e)}

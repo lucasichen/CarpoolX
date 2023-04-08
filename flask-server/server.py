@@ -76,8 +76,16 @@ def taxi_information():
 @app.route('/user/report', methods=['POST'])
 def report_user():
     data = request.get_json()
-    user_id = data.get('user_id')
-    result = account_controller.report_user(user_id)
+    email = data.get('email')
+    result = account_controller.report_user(email)
+    return result
+
+@app.route('/user/info', methods=['POST'])
+def user_taxi_info():
+    data = request.get_json()
+    uid = data.get('user_id')
+    print("uid: ", uid)
+    result = account_controller.get_name_email(uid)
     return result
 
 if __name__ == '__main__':
