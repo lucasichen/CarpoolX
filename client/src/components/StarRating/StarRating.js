@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-export default function App({parentCallback}) {
+export default function StarRating({parentCallback}) {
     const starRatingOptions = [1, 2, 3, 4, 5];
 
     const [starRating, setStarRating] = useState(null);

@@ -28,18 +28,12 @@ const data = [
         image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
         screen: 'Report',
     },
-    {
-        id: '5',
-        title: 'Rate a User',
-        image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
-        screen: 'RateUser',
-    },
 ]
 
 const NavOptions = () => {
     const navigation = useNavigation()
     return (
-      <FlatList 
+      <FlatList
             data={data}
             numColumns={2}
             keyExtractor={(item) => item.id}
@@ -60,7 +54,7 @@ const NavOptions = () => {
       />
     )
   }
-  
+
 const styles = StyleSheet.create({
     container: {
         padding: 5,
@@ -105,6 +99,6 @@ const styles = StyleSheet.create({
         height: 25,
     }
 });
-  
+
 
 export default NavOptions
