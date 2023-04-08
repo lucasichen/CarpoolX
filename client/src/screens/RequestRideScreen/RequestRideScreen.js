@@ -7,32 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-function sendRide(pickup, dest, capacity, callback){
-  return fetch('http://10.0.2.2:5000/requestRide', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          pickuploc: pickup,
-          destloc: dest,
-          capacity: capacity
-      })
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log(data)
-    if (data.success){
-      console.log("Created Ride")
-      callback(true, data.data)
-    }else{
-      callback(false);
-    }
-  })
-  .catch(error =>{
-    console.error("Error occured ->: ", error)
-  })
-}
+
 
 const RequestRideScreen = () => {
 
@@ -50,16 +25,7 @@ const RequestRideScreen = () => {
 
     const onNextPressed = () => {
         if (pickup && destination) {
-
-          sendRide(pickup, destination, capacity, (success, rideid) => {
-            if (success){
-              console.log("Ride created!")
-              navigation.navigate('RideConfirm', { originGeo, destGeo })
-            }
-            else{
-              console.log("Unable to create ride :(")
-            }
-          });
+          navigation.navigate('RideConfirm', { originGeo, destGeo, pickup, destination, capacity })
         }else{
           if (pickup){
             setPickupError(false)
