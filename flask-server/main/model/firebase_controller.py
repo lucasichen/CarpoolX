@@ -155,14 +155,18 @@ class FirebaseDatabase(FirebaseInit):
         """
         availablerides = {"rides": []}
         try:
-            ridesavai = self.db.child("rides").get()
-            for ride in ridesavai.each():
-                print("here")
+            rides = self.db.child("rides").get()
+            for ride in rides.each():
+                if ride.val() == None:
+                    continue
                 print(ride.val().get("dest"))
-                if ride.val().get("dest") == destloc:
-                    availablerides["rides"].append()
+                # print(ride.val().get("dest"))
+                if ride.val()["dest"] == destloc:
+                    availablerides["rides"].append(ride.val()["taxi_id"])
+            print(availablerides)
             return availablerides
         except Exception as e:
+            print('ereerrr')
             return {"error": str(e)}
         
 

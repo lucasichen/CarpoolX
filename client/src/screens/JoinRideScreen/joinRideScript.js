@@ -10,6 +10,7 @@ export function getRideOffers(destination) {
     })
     .then(res => res.json())
     .then(data => {
+        console.log("Data from getRideOffers: ", data)
         return data
     })
     .catch(error =>{
