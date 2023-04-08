@@ -25,7 +25,6 @@ const AppStack = () => {
         <Stack.Screen name="JoinRide" component={JoinRideScreen} />
         <Stack.Screen name="TaxiInformation" component={TaxiInformationScreen} />
         <Stack.Screen name="PrivateEvent" component={PrivateEventScreen} />
-
         {/* <Stack.Screen name="RateUser" component={RateUser} /> */}
         <Stack.Screen name="RideConfirm" component={RideConfirmScreen} />
       </Stack.Navigator>
