@@ -27,7 +27,7 @@ const RideConfirmScreen = () => {
 
   const mapRef = useRef(null);
 
-  const onStartPressed = async () => {
+  const onStartPressed = async () => { 
     let tokens = await retrieveTokens()
     startRide(tokens.idToken, pickup, destination, capacity)
   }
