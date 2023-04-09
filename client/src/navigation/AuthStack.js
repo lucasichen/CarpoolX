@@ -5,6 +5,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import TermsOfUseScreen from '../screens/TermsOfUseScreen';
 import AppStack from './AppStack';
+import RateModalScreen from "../screens/RateModalScreen";
 // import RateModal from "../screens/RateModalScreen";
 
 const Stack = createNativeStackNavigator();
@@ -20,7 +21,7 @@ const AuthStack = () => {
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
         <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} />
         <Stack.Screen name="Home_App" component={AppStack} />
-        {/* <Stack.Screen name="RateModal" component={RateModal} options={{ presentation: 'modal' }} /> */}
+        <Stack.Screen name="RateModal" component={RateModalScreen} options={{ presentation: 'modal' }} />
     </Stack.Navigator>
 )
 }

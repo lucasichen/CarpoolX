@@ -1,1 +1,1 @@
-export {default} from './RateModal';
+export {default} from './RateModalScreen';

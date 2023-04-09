@@ -3,12 +3,12 @@ import { StyleSheet, Text, View} from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 
-const RateUser = ({route}) => {
+const RateUserScreen = ({route}) => {
     const navigation = useNavigation();
-    const userList = ["rafeed", "allison", "henushan", "lucas"];
+    const userList = route.params.paramKey
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.root}>
             <Text style={{ fontSize: 30 }}>Rate your fellow riders!</Text>
             <View style={styles.userL}>
                 {userList.map((name) => (
@@ -28,14 +28,9 @@ const RateUser = ({route}) => {
 
 const styles = StyleSheet.create({
     root: {
-        backgroundColor: 'white',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        padding: 20,
-        height: '100%',
-        paddingTop: 200,
-        paddingBottom: 400
+        justifyContent: 'center'
     },
     title: {
         fontSize: 24,
@@ -58,4 +53,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RateUser;
+export default RateUserScreen;
