@@ -10,6 +10,7 @@ import PrivateEventScreen from '../screens/PrivateEventScreen/PrivateEventScreen
 
 // import RateUser from "../screens/RateUserScreen";
 import RideConfirmScreen from '../screens/RideConfirmScreen'
+import ViewRidesScreen from '../screens/ViewRidesScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const AppStack = () => {
         <Stack.Screen name="PrivateEvent" component={PrivateEventScreen} />
         {/* <Stack.Screen name="RateUser" component={RateUser} /> */}
         <Stack.Screen name="RideConfirm" component={RideConfirmScreen} />
+        <Stack.Screen name="ViewRideOffers" component={ViewRidesScreen} />
       </Stack.Navigator>
   )
 }
