@@ -8,9 +8,11 @@ import ReportScreen from '../screens/ReportScreen';
 import JoinRideScreen from '../screens/JoinRideScreen';
 import PrivateEventScreen from '../screens/PrivateEventScreen/PrivateEventScreen';
 
-// import RateUser from "../screens/RateUserScreen";
+// import RateUserScreen from "../screens/RateUserScreen";
 import RideConfirmScreen from '../screens/RideConfirmScreen'
 import ViewRidesScreen from '../screens/ViewRidesScreen'
+import EndOfRideScreen from "../screens/EndOfRideScreen";
+import RateUserScreen from "../screens/RateUserScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,9 +28,10 @@ const AppStack = () => {
         <Stack.Screen name="JoinRide" component={JoinRideScreen} />
         <Stack.Screen name="TaxiInformation" component={TaxiInformationScreen} />
         <Stack.Screen name="PrivateEvent" component={PrivateEventScreen} />
-        {/* <Stack.Screen name="RateUser" component={RateUser} /> */}
+        <Stack.Screen name="RateUser" component={RateUserScreen} />
         <Stack.Screen name="RideConfirm" component={RideConfirmScreen} />
         <Stack.Screen name="ViewRideOffers" component={ViewRidesScreen} />
+        <Stack.Screen name="EndOfRide" component={EndOfRideScreen} />
       </Stack.Navigator>
   )
 }

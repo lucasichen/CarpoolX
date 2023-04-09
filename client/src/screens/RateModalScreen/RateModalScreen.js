@@ -7,7 +7,7 @@ import { useNavigation,useFocusEffect } from '@react-navigation/native';
 function rateUser(username, rating, success) {
 
 }
-const RateUser = ({route}) => {
+const RateModalScreen = ({route}) => {
     const navigation = useNavigation();
     const [rating, setRating] = useState(0);
 
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RateUser;
+export default RateModalScreen;

@@ -1,1 +1,1 @@
-export {default} from './RateUser';
+export {default} from './RateUserScreen';
