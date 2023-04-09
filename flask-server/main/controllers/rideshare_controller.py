@@ -28,7 +28,7 @@ class RideshareController:
         except Exception as e:
             return {"success": False, "error": str(e)}
         
-    def create_private_event(self, event_id, date, location, attendees, emails):
+    def create_private_event(self, date, location, attendees, emails):
         """
         Creates a event offer to store in the database.
         """
