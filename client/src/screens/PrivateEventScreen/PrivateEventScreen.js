@@ -18,6 +18,7 @@ const PrivateEventScreen = () => {
     const [counter, setCounter] = useState(0);
     const [showEmailError, setShowEmailError] = useState(false);
     const [date, setDate] = useState('');
+    const [eventID, setEvent] = useState(0);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleEnter = () => {
@@ -52,10 +53,10 @@ const PrivateEventScreen = () => {
         setDate('')
         setAttendees('')
         setEmails([])
-        //save the event to the database 
-        sendEvent(location, date, attendees)
-        //Handle notifcation generation and user checking
-
+        for(let i =0; i < attendees; i++){
+            verifyUser(emails[i]);
+        }
+        sendEvent(location, date, attendees, emails);
     }
 
     return (

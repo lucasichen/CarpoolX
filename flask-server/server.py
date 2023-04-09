@@ -95,6 +95,25 @@ def user_taxi_info():
     result = account_controller.get_name_email(uid)
     return result
 
+@app.route('/verify', methods=['POST'])
+def verify_user():
+    data = request.get_json()
+    email = data.get('email')
+    result = account_controller.verify_user(email)
+    return result
+
+@app.route('/privateEvent', methods=['POST'])
+def privateEvent():
+    data = request.get_json()
+    date = data.get('date')
+    location = data.get('location')
+    emails = data.get('emails')
+    attendees = data.get('attendees')
+    result = rideshare_controller.create_private_event(date, location, attendees, emails)
+    return result
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

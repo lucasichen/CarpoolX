@@ -7,10 +7,10 @@
 
 
 export function verifyUser(email, callback) {
-    return fetch('', {
+    return fetch('http://10.0.2.2:5000/verify', {
         method: 'POST',
         headers: {
-
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             email: email
@@ -32,20 +32,23 @@ export function verifyUser(email, callback) {
 }
 
 
-function sendEvent(location, date, attendees){
-    return fetch('' , {
+function sendEvent(location, date, attendees, emails){
+    return fetch('http://10.0.2.2:5000/privateEvent', {
         method: 'POST',
         headers: {
-            
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-    
+            date: date,
+            location: location,
+            attendees: attendees,
+            emails: emails
         })
     })
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            console.log('User verified');
+            console.log('Event created');
             callback(true);
         } else {
             callback(false);
