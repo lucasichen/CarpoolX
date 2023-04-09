@@ -35,8 +35,8 @@ class RideshareController:
         try:
             resp = self.firebase_db.get_ride(str(destloc))
             if resp["rides"]:
-                return {"success": True, "data": resp}
+                return {"success": True, "resp": resp}
             else:
-                return {"success": False, "data": "No available Rides"}
+                return {"success": False, "resp": resp}
         except Exception as e:
             return {"success": False, "error": "can't get available rides - "+str(e)}

@@ -24,9 +24,11 @@ const JoinRideScreen = () => {
 
     const onNextPressed = () => {
         if (pickup && destination) {
-          const availableRides = getRideOffers(String(destination))
-          console.log(availableRides)
-          //navigation.navigate('ViewRideOffers')
+          getRideOffers(String(destination), (success, rideIds) => {
+            const rideToReturn = rideIds
+            navigation.navigate('ViewRideOffers', { rideToReturn })
+          })
+          
         }else{
           if (pickup){
             setPickupError(false)

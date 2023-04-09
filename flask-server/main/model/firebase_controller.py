@@ -159,11 +159,8 @@ class FirebaseDatabase(FirebaseInit):
             for ride in rides.each():
                 if ride.val() == None:
                     continue
-                print(ride.val().get("dest"))
-                # print(ride.val().get("dest"))
                 if ride.val()["dest"] == destloc:
                     availablerides["rides"].append(ride.val()["taxi_id"])
-            print(availablerides)
             return availablerides
         except Exception as e:
             print('ereerrr')

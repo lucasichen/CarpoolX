@@ -1,4 +1,4 @@
-export function getRideOffers(destination) {
+export function getRideOffers(destination, callback) {
     return fetch('http://10.0.2.2:5000/getrides', {
         method: 'POST',
         headers: {
@@ -11,7 +11,12 @@ export function getRideOffers(destination) {
     .then(res => res.json())
     .then(data => {
         console.log("Data from getRideOffers: ", data)
-        return data
+        if (data.success){
+            callback(true, data.resp)
+        }
+        else{
+            callback(false, data.resp)
+        }
     })
     .catch(error =>{
         console.error("Error occured at here ->: ", error)
