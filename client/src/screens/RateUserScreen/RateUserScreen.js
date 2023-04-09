@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const RateUserScreen = ({route}) => {
     const navigation = useNavigation();
-    const userList = ["rafeed", "allison", "henushan", "lucas"];
+    const userList = route.params.paramKey
 
     return (
         <View style={styles.root}>
