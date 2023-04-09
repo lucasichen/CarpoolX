@@ -120,7 +120,7 @@ class FirebaseDatabase(FirebaseInit):
         taxi_data = {
             "dest": dest,
             "capacity": capacity,
-            "passenger_ids": uid,
+            "passenger_ids": [uid],
         }
         print(ride_data, taxi_data)
         try:
@@ -148,7 +148,25 @@ class FirebaseDatabase(FirebaseInit):
             return False
         except Exception as e:
             return False
-    
+        
+    def get_ride(self, destloc):
+        """
+        Get all rides arriving at destloc
+        """
+        availablerides = {"rides": []}
+        try:
+            rides = self.db.child("rides").get()
+            for ride in rides.each():
+                if ride.val() == None:
+                    continue
+                if ride.val()["dest"] == destloc:
+                    availablerides["rides"].append(ride.val()["taxi_id"])
+            return availablerides
+        except Exception as e:
+            print('ereerrr')
+            return {"error": str(e)}
+        
+
     def get_user(self, uid):
         """
         Get user's data from the database
@@ -207,7 +225,6 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": count}
         except Exception as e:
             return {"success": False, "error": str(e)}
-        
 
     def create_private_event(self, event_id, location, attendees, date, emails):
         """
@@ -245,3 +262,19 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": count}
         except Exception as e:
             return {"success": False, "error": str(e)}
+    
+    def report_user(self, email):
+        """
+        Report a user for bad behaviour
+        """
+        try:
+            users = self.db.child("user").get()
+            for user in users.each():
+                if user.val().get("email") == email:
+                    uid = user.key()
+                    break
+            report = self.db.child("reports").child(uid).set({"email": email})
+            return {"success": True, "data": report}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+

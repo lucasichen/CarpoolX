@@ -1,16 +1,21 @@
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, SectionList } from 'react-native'
 import React, {useState} from 'react'
 import GoogleMaps from '../../components/Maps/GoogleMaps'
 import CustomButton from '../../components/CustomButton'
+import CustomInput from '../../components/CustomInput'
 import { useNavigation } from '@react-navigation/native'
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import { getRideOffers } from './joinRideScript'
 
 const JoinRideScreen = () => {
 
     const navigation = useNavigation()
-    const [pickup, setPickup] = useState(null)
-    const [destination, setDestination] = useState(null)
+    const [pickup, setPickup] = useState('')
+    const [destination, setDestination] = useState('')
+    const [capacity, setCapacity] = useState('')
+    const [originGeo, setOriginGeo] = useState(null)
+    const [destGeo, setDestGeo] = useState(null)
 
     const [showPickupError, setPickupError] = useState(false);
     const [showDestError, setDestError] = useState(false);
@@ -19,13 +24,17 @@ const JoinRideScreen = () => {
 
     const onNextPressed = () => {
         if (pickup && destination) {
-          navigation.navigate('PeopleShare', { pickup, destination })
+          getRideOffers(String(destination), (success, rideIds) => {
+            const rideToReturn = rideIds
+            navigation.navigate('ViewRideOffers', { rideToReturn })
+          })
+          
         }else{
           if (pickup){
             setPickupError(false)
           }
           if (destination){
-            setDestError(true)
+            setDestError(false)
           }
           if (!pickup){
             setPickupError(true)
@@ -38,23 +47,26 @@ const JoinRideScreen = () => {
     return (
         <View>
           <View style={styles.container}>
-            <GooglePlacesAutocomplete
-                placeholder= {'Pick Up Location'}
-                styles={styles}
-                fetchDetails={true}
-                returnKeyType={"search"}
-                minLength={2}
-                onPress={(data, details = null) => {
-                    setPickup(true)
-                }}
-                enablePoweredByContainer={false}
-                query={{
-                    key: REACT_NATIVE_GOOGLE_MAPS_APIKEY,
-                    language: 'en',
-                }}
-                nearbyPlacesAPI='GooglePlacesSearch'
-                debounce={400}
-            />
+            <View>
+              <GooglePlacesAutocomplete
+                  placeholder= {'Pick Up Location'}
+                  styles={styles}
+                  fetchDetails={true}
+                  returnKeyType={"search"}
+                  minLength={2}
+                  onPress={(data, details = null) => {
+                    setPickup(String(data.place_id))
+                    setOriginGeo(details.geometry.location)
+                  }}
+                  enablePoweredByContainer={false}
+                  query={{
+                      key: REACT_NATIVE_GOOGLE_MAPS_APIKEY,
+                      language: 'en',
+                  }}
+                  nearbyPlacesAPI='GooglePlacesSearch'
+                  debounce={400}
+              />
+            </View>
             <View style={styles.errorContainer}>
               {showPickupError && <Text style={styles.errorMsg}>{errorMsg}</Text>}
             </View>
@@ -67,7 +79,8 @@ const JoinRideScreen = () => {
                 returnKeyType={"search"}
                 minLength={2}
                 onPress={(data, details = null) => {
-                    setDestination(true)
+                  setDestination(String(data.place_id))
+                  setDestGeo(details.geometry.location)
                 }}
                 enablePoweredByContainer={false}
                 query={{
@@ -80,13 +93,22 @@ const JoinRideScreen = () => {
             <View style={styles.errorContainer}>
               {showDestError && <Text style={styles.errorMsg}>{errorMsg}</Text>}
             </View>
+            <View style={styles.capacity}>
+              <Text>
+              How many people in the ride?
+              </Text>
+              <CustomInput
+                placeholder="Enter a number between 1-5"
+                value={capacity}
+                setValue={setCapacity}
+              />
+            </View>
           </View>
-          
           <GoogleMaps />
-          <CustomButton style={styles.buttonStyle} 
-            text='Next'
+          <CustomButton 
+            text='Confirm'
             onPress={onNextPressed}
-            type="PRIMARY"
+            type="RIDE"
           />
         </View>
     )
@@ -97,8 +119,8 @@ export default JoinRideScreen
 const styles = StyleSheet.create({
   container: {
       backgroundColor: 'white',
-      paddingTop: 10,
-      paddingBottom: 10,
+      paddingTop:10,
+      paddingBottom: 0,
       flex: 0
   },
   textInput: {
@@ -118,7 +140,10 @@ const styles = StyleSheet.create({
     height: 15,
     marginLeft: 20,
   },
+  capacity: {
+    marginLeft: 20,
+  },
   buttonStyle: {
-    marginTop: 20
-  }
+    marginTop: 40
+  },
 })

@@ -27,7 +27,7 @@ class RideshareController:
                 return {"success": False, "error": response["error"]}
         except Exception as e:
             return {"success": False, "error": str(e)}
-        
+
     def create_private_event(self, date, location, attendees, emails):
         """
         Creates a event offer to store in the database.
@@ -42,4 +42,17 @@ class RideshareController:
                 return {"success": False, "error":response["error"]}    
         except Exception as e:
             return {"success": False, "error": str(e)}
+    
+    def get_rides(self, destloc):
+        """
+        Gets all the rides that arrive at destination
+        """
+        try:
+            resp = self.firebase_db.get_ride(str(destloc))
+            if resp["rides"]:
+                return {"success": True, "resp": resp}
+            else:
+                return {"success": False, "resp": resp}
+        except Exception as e:
+            return {"success": False, "error": "can't get available rides - "+str(e)}
 
