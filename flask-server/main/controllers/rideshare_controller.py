@@ -27,5 +27,19 @@ class RideshareController:
                 return {"success": False, "error": response["error"]}
         except Exception as e:
             return {"success": False, "error": str(e)}
-    
+        
+    def create_private_event(self, event_id, date, location, attendees, emails):
+        """
+        Creates a event offer to store in the database.
+        """
+        try:
+            response = self.firebase_db.gen_event_id()
+            if response["sucess"]:
+                event_id = response["data"]
+                self.firebase_db.create_private_event(event_id, location, attendees, date, emails)
+                return {"success": True, "message": "Event created successfully.", "data": event_id}
+            else:
+                return {"success": False, "error":response["error"]}    
+        except Exception as e:
+            return {"success": False, "error": str(e)}
 

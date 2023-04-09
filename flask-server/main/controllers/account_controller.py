@@ -100,3 +100,17 @@ class AccountController:
             return data if data["success"] else {"success": False, "error": data["error"]}
         except Exception as e:
             return {"success": False, "error": "can't delete user account - "+str(e)}
+
+    def verify_user(self, email):
+        """
+        Verifiess a user exists from the Firebase
+        """
+        try:
+            # Check if user already exists in users collection
+            existing_user = self.firebase_db.user_exists(email)
+            if existing_user:
+                return {"success": True, "message": "User verified successfully!"}
+            else : 
+                return {"sucess": False, "message": "User doesn't exist"}
+        except Exception as e:
+            return {"success": False, "error": str(e)}

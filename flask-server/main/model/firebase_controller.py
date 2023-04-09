@@ -207,3 +207,41 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": count}
         except Exception as e:
             return {"success": False, "error": str(e)}
+        
+
+    def create_private_event(self, event_id, location, attendees, date, emails):
+        """
+        Create a new event in the database
+        """
+        event_data = {
+            "location": location,
+            "attendees": attendees,
+            "emails": emails,
+            "date": date,
+        }
+        print(event_data)
+        try:
+            ride_offer = (
+                self.db.child("event").child(event_id).set(event_data)
+            )
+            print(ride_offer)
+            return {"success": True, "data": {'Event': ride_offer}}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+
+    def gen_event_id(self):
+        """
+        Helper functions to generate event id
+        """
+        event_id = 1
+        try:
+            try:
+                events = self.db.child("event").get()
+            except Exception as e:
+                return {"success": True, "data": event_id}
+            if events.each() == None:
+                return {"success": True, "data": event_id}
+            count = len(events.each())
+            return {"success": True, "data": count}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
