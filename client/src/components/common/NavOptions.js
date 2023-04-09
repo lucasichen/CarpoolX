@@ -28,12 +28,6 @@ const data = [
         image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
         screen: 'Report',
     },
-    {
-        id: '5',
-        title: 'end of ride',
-        image: 'https://www.pngmart.com/files/21/Red-Alert-PNG.png',
-        screen: 'EndOfRide',
-    },
 ]
 
 const NavOptions = () => {
