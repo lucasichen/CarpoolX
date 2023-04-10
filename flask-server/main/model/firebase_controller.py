@@ -326,4 +326,14 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": report}
         except Exception as e:
             return {"success": False, "error": str(e)}
+        
+    def rate_user(self, name, rating):
+        """
+        Rate a user
+        """
+        try:
+            report = self.db.child("rating").child(name).set({"rating": rating})
+            return {"success": True, "data": report}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
 

@@ -56,3 +56,13 @@ class RideshareController:
         except Exception as e:
             return {"success": False, "error": "can't get available rides - "+str(e)}
 
+    def rate_user(self, name, rating):
+        """
+        Rates a user
+        """
+        try:
+            resp = self.firebase_db.rate_user(name, rating)
+            print(resp)
+            return {"success": True, "resp": resp}
+        except Exception as e:
+            return {"success": False, "error": "can't rate user - "+str(e)}

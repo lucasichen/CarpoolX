@@ -129,7 +129,13 @@ def privateEvent():
     result = rideshare_controller.create_private_event(date, location, attendees, emails)
     return result
 
-# print(taxi_controller.get_taxi_passengers('4'))
+@app.route('/rateuser', methods=['POST'])
+def rate_user():
+    data = request.get_json()
+    name = data.get('name')
+    rating = data.get('rating')
+    result = rideshare_controller.rate_user(name, rating)
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True)
