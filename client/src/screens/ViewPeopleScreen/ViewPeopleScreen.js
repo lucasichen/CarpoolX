@@ -37,6 +37,10 @@ const ViewPeopleScreen = () => {
     const [passengers, setPassengers] = useState([])
     const [havePassengers, setHavePassengers] = useState(false)
 
+    const onEndPressed = () =>{
+        navigation.navigate("EndOfRide")
+    }
+
     useEffect(() => {
         console.log(passengers, "refresh passengers");
       }, [passengers]);
@@ -80,15 +84,26 @@ const ViewPeopleScreen = () => {
 
     return(
         <View style={styles.container}>
-            <Text>Current users on ride:</Text>
             <View>
-                <Text>{passengers}</Text>
+                <Text style={styles.title}>Current users on ride:</Text>
+                <View style={styles.passengers}>
+                    <Text>{passengers}</Text>
+                </View>
+                <View>
+                    <CustomButton
+                        text="Refresh"
+                        onPress={onRefreshPressed}
+                        type="PRIMARY"
+                    />
+                </View>
             </View>
-            <CustomButton
-                text="Refresh"
-                onPress={onRefreshPressed}
-                type="PRIMARY"
-            />
+            <View style={styles.endtrip}>
+                <CustomButton
+                    text="End Trip"
+                    onPress={onEndPressed}
+                    type="DELETE"
+                />
+            </View>
         </View>
     )
 }
@@ -99,6 +114,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
         marginHorizontal: 20,
         marginVertical: 100
+    },
+    passengers: {
+        marginVertical: 20,
+        alignItems: 'center',
+    },
+    endtrip: {
+        marginVertical: 250,
     }
 })
 

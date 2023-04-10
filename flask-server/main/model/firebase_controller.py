@@ -160,7 +160,19 @@ class FirebaseDatabase(FirebaseInit):
                 if ride.val() == None:
                     continue
                 if ride.val()["dest"] == destloc:
-                    availablerides["rides"].append(ride.val()["taxi_id"])
+                    taxiId = ride.val()["taxi_id"]
+                    print(taxiId)
+                    taxidata = self.db.child("taxi").child(taxiId).child("passenger_ids").get()
+                    total_capacity = self.db.child("taxi").child(taxiId).child("capacity").get()
+                    print(taxidata.val(), total_capacity.val())
+                    if (taxidata.val() == None):
+                        continue
+                    if (total_capacity.val() == None):
+                        continue
+                    curr = len(taxidata.val())
+                    tot_capacity = int(total_capacity.val())
+                    if curr < tot_capacity:    
+                        availablerides["rides"].append(taxiId)
             return availablerides
         except Exception as e:
             print('ereerrr')
