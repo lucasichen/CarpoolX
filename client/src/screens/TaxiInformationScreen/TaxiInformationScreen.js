@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState, useCallback } from 'react'
 import { findTaxi, user_information } from './findTaxiScript'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
-import CustomButton from '../../components/CustomButton'
 
 /**
  * 
@@ -12,7 +11,6 @@ import CustomButton from '../../components/CustomButton'
  */
 const TaxiInformationScreen = ({route, navigation}) => {
     const {code}  = route.params;
-    const [taxCode, setTaxCode] = useState(code)
     const [passengers, setPassengers] = useState(['...'])
     const [destination, setDestination] = useState('...')
     const [capacity, setCapacity] = useState('...')
@@ -69,12 +67,6 @@ const TaxiInformationScreen = ({route, navigation}) => {
                     <Text style={styles.item}>{capacity}</Text>
                 </View>
             </View>
-            <View style={styles.container_join}>
-                <CustomButton 
-                    text="Join Taxi"
-                    onPress={() => navigation.navigate('JoinTaxi', {code: code})}
-                    type="PRIMARY" />
-            </View>
         </View>
     )
 }
@@ -104,10 +96,6 @@ const styles = StyleSheet.create({
     container_sublist: {
         margin: 10,
         alignItems: 'center',
-    },
-    container_join: {
-        marginTop: 20,
-        width: '80%',
     },
     subtitle: {
         fontSize: 20,

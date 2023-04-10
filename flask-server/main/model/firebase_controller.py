@@ -160,13 +160,41 @@ class FirebaseDatabase(FirebaseInit):
                 if ride.val() == None:
                     continue
                 if ride.val()["dest"] == destloc:
-                    availablerides["rides"].append(ride.val()["taxi_id"])
+                    taxiId = ride.val()["taxi_id"]
+                    print(taxiId)
+                    taxidata = self.db.child("taxi").child(taxiId).child("passenger_ids").get()
+                    total_capacity = self.db.child("taxi").child(taxiId).child("capacity").get()
+                    print(taxidata.val(), total_capacity.val())
+                    if (taxidata.val() == None):
+                        continue
+                    if (total_capacity.val() == None):
+                        continue
+                    curr = len(taxidata.val())
+                    tot_capacity = int(total_capacity.val())
+                    if curr < tot_capacity:    
+                        availablerides["rides"].append(taxiId)
             return availablerides
         except Exception as e:
             print('ereerrr')
             return {"error": str(e)}
         
-
+    def add_user(self, uid, taxi_id):
+        """
+        Add user to a taxi
+        """
+        try:
+            taxi = self.db.child("taxi").child(taxi_id).child("passenger_ids").get()
+            if taxi.val() == None:
+                pass
+            print(taxi.val())
+            taxi = taxi.val()
+            taxi.append(uid)
+            print(taxi)
+            response = self.db.child("taxi").child(taxi_id).update({"passenger_ids": taxi})
+            return {"success": True, "data": response}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+        
     def get_user(self, uid):
         """
         Get user's data from the database
@@ -206,6 +234,26 @@ class FirebaseDatabase(FirebaseInit):
             taxi = self.db.child("taxi").child(taxi_id).get()
             print(taxi)
             return {"success": True, "data": taxi.val()}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+        
+    def get_passengers(self, taxi_id):
+        """
+        Get taxi's passengers
+        """
+        try:
+            usernames = []
+            print(taxi_id)
+            taxidata = self.db.child("taxi").child(taxi_id).child("passenger_ids").get()
+            if taxidata == None:
+                return {"success": True, "data": usernames}
+            print(taxidata.val())
+            for user in taxidata.val():
+                user_data = self.db.child("user").child(user).get()
+                print(user_data.val())
+                usernames.append(user_data.val()["name"])
+
+            return {"success": True, "data": usernames}
         except Exception as e:
             return {"success": False, "error": str(e)}
     

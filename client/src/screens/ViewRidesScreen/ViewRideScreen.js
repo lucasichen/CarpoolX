@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
+import { addUser, retrieveTokens } from './viewRideScript';
 
 const ViewRideScreen = () => {
     const route = useRoute();
@@ -18,6 +19,12 @@ const ViewRideScreen = () => {
             onPress={() => setRideNum(number)}
         />
     )
+
+    const onStartPressed = async () =>{
+        let tokens = await retrieveTokens()
+        addUser(tokens.idToken, rideToFind)
+        navigation.navigate("ViewPeople", {rideToFind})
+    }
 
     const renderMain = () => {
         if (rideArr.length == 0){
@@ -40,7 +47,7 @@ const ViewRideScreen = () => {
                     <View style={styles.start_button}>
                         <CustomButton
                             text="Start Ride"
-                            //onPress={onStartPressed}
+                            onPress={onStartPressed}
                             type="PRIMARY"
                         />
                     </View>

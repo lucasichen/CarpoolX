@@ -1,7 +1,7 @@
 import {View, StyleSheet, Dimensions, SafeAreaView, Image, Text} from 'react-native'
 import React, {useRef, useEffect, useState} from 'react'
 import MapView, {Marker} from 'react-native-maps'
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import MapViewDirections from 'react-native-maps-directions';
 import { REACT_NATIVE_GOOGLE_MAPS_APIKEY } from '@env'
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -18,6 +18,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 const RideConfirmScreen = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const {originGeo, destGeo, pickup, destination, capacity} = route.params
   const origin = { latitude: originGeo.lat, longitude: originGeo.lng}
   const destinationL = { latitude: destGeo.lat, longitude: destGeo.lng}
@@ -29,7 +30,9 @@ const RideConfirmScreen = () => {
 
   const onStartPressed = async () => { 
     let tokens = await retrieveTokens()
-    startRide(tokens.idToken, pickup, destination, capacity)
+    const taxiToFind = await startRide(tokens.idToken, pickup, destination, capacity)
+    console.log(taxiToFind)
+    navigation.navigate("ViewPeopleStart", {taxiToFind})
   }
 
   useEffect(() => {

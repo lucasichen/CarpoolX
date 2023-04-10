@@ -80,6 +80,22 @@ def taxi_information():
     result = taxi_controller.taxi_information(taxi_id)
     return result
 
+@app.route('/getpassengers', methods=['POST'])
+def taxi_passengers():
+    data = request.get_json()
+    taxi_id = data.get('taxi_id')
+    result = taxi_controller.get_taxi_passengers(taxi_id)
+    return result
+
+@app.route('/adduser', methods=['POST'])
+def add_user():
+    id_token = request.headers.get('Authorization')
+    uid = account_controller.get_uid(id_token)
+    data = request.get_json()
+    taxi_id = data.get('taxi_id')
+    result = taxi_controller.add_user(uid, taxi_id)
+    return result
+
 @app.route('/user/report', methods=['POST'])
 def report_user():
     data = request.get_json()
@@ -113,9 +129,10 @@ def privateEvent():
     result = rideshare_controller.create_private_event(date, location, attendees, emails)
     return result
 
-
+# print(taxi_controller.get_taxi_passengers('4'))
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # print(result = taxi_controller.get_taxi_passengers('4'))
 
 
