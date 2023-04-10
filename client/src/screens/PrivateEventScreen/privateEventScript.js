@@ -20,7 +20,7 @@ export function verifyUser(email, callback) {
     .then(data => {
         if (data.success) {
             console.log('User verified');
-            callback(true);
+            return true
         } else {
             callback(false);
         }
@@ -49,7 +49,7 @@ export function sendEvent(location, date, attendees, emails){
     .then(data => {
         if (data.success) {
             console.log('Event created');
-            return data
+            return true
         } else {
             callback(false);
         }

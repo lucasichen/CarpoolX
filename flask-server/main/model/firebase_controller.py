@@ -230,7 +230,6 @@ class FirebaseDatabase(FirebaseInit):
         """
         Create a new event in the database
         """
-        print(emails)
         event_data = {
             "location": location,
             "attendees": attendees,
@@ -274,6 +273,7 @@ class FirebaseDatabase(FirebaseInit):
                 if user.val().get("email") == email:
                     uid = user.key()
                     break
+            print("reporting: ", uid)
             report = self.db.child("reports").child(uid).set({"email": email})
             return {"success": True, "data": report}
         except Exception as e:
