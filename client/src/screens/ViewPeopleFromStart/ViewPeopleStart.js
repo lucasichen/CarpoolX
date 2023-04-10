@@ -38,7 +38,8 @@ const ViewPeopleStart = () => {
     const [havePassengers, setHavePassengers] = useState(false)
 
     const onEndPressed = () =>{
-        navigation.navigate("EndOfRide")
+      let sendPassengers = passengers;
+        navigation.navigate("EndOfRide", {sendPassengers})
     }
 
     useEffect(() => {

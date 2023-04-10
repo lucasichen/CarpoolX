@@ -3,10 +3,8 @@ import { StyleSheet, Text, View, Modal } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import StarRating from '../../components/StarRating';
 import { useNavigation,useFocusEffect } from '@react-navigation/native';
+import { rateUser } from './rateUserScript';
 
-function rateUser(username, rating, success) {
-
-}
 const RateModalScreen = ({route}) => {
     const navigation = useNavigation();
     const [rating, setRating] = useState(0);
@@ -19,8 +17,10 @@ const RateModalScreen = ({route}) => {
     const onClosePressed = () => {
         setVisible(false)
     }
-    const onRatePressed = () => {
-        console.warn(rating)
+    const onRatePressed = async() => {
+        console.log("rating ", username, " with:",rating)
+        let resp = rateUser(await username, await rating);
+        console.log(resp)
         // ------------------ rate user ------------------
         // ------------------ goes back -------------------
         navigation.goBack();
