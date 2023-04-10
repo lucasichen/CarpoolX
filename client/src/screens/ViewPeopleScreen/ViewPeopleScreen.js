@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
-function getPassengers(taxiId, calback){
+function getPassengers(taxiId, callback){
     console.log("Getting users...")
     return fetch('http://10.0.2.2:5000/getpassengers', {
         method: 'POST',
@@ -18,7 +18,7 @@ function getPassengers(taxiId, calback){
     .then(data => {
       console.log(data)
       if (data.success){
-        console.log("Created Ride")
+        console.log("Got users", data.data)
         return data.data;
       }else{
         callback(false);
@@ -33,23 +33,57 @@ const ViewPeopleScreen = () => {
 
     const route = useRoute();
     const navigation = useNavigation()
-    const {rideToReturn} = route.params
+    const {rideToFind} = route.params
     const [passengers, setPassengers] = useState([])
+    const [havePassengers, setHavePassengers] = useState(false)
 
-    const passengersDisplay = passengers.map((passenger) => {
-        <Text>{passenger}</Text>
-    })
+    useEffect(() => {
+        console.log(passengers, "refresh passengers");
+      }, [passengers]);
+      
+      const onRefreshPressed = async() => {
+        newPassengers = await getPassengers(rideToFind);
+        if (newPassengers == undefined) {
+          console.log("No passengers");
+          return;
+        }
+        console.log(newPassengers, "new passengers to set");
+        try {
+          setPassengers(newPassengers);
+        } catch (error) {
+          console.log("cant set passengers");
+        }
+        setHavePassengers(true);
+      }
 
-    const onRefreshPressed = () => {
-
-        newPassengers = getPassengers(rideToReturn)
-        console.log(newPassengers)
-        setPassengers(newPassengers)
+    useEffect(() => {
+    console.log(passengers, "passengers to set");
+    }, [passengers]);
+    
+    useEffect(() => {
+    const fetchData = async () => {
+        taxiId = rideToFind;
+        const newPassengers = await getPassengers(rideToFind);
+        if (newPassengers == undefined) {
+        console.log("No passengers");
+        return;
+        }
+        try {
+        setPassengers(newPassengers);
+        } catch (error) {
+        console.log("cant set passengers");
+        }
+        setHavePassengers(true);
     }
+    fetchData();
+    }, []);
+
     return(
         <View style={styles.container}>
             <Text>Current users on ride:</Text>
-            {/* {passengersDisplay} */}
+            <View>
+                <Text>{passengers}</Text>
+            </View>
             <CustomButton
                 text="Refresh"
                 onPress={onRefreshPressed}

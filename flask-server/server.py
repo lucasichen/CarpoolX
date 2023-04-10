@@ -120,9 +120,10 @@ def privateEvent():
     result = rideshare_controller.create_private_event(date, location, attendees, emails)
     return result
 
-
+# print(taxi_controller.get_taxi_passengers('4'))
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # print(result = taxi_controller.get_taxi_passengers('4'))
 
 

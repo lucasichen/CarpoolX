@@ -218,8 +218,8 @@ class FirebaseDatabase(FirebaseInit):
             print(taxi_id)
             taxidata = self.db.child("taxi").child(taxi_id).child("passenger_ids").get()
             if taxidata == None:
-                pass
-            print(taxidata)
+                return {"success": True, "data": usernames}
+            print(taxidata.val())
             for user in taxidata.val():
                 user_data = self.db.child("user").child(user).get()
                 print(user_data.val())

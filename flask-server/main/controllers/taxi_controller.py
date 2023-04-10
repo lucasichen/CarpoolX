@@ -25,7 +25,7 @@ class TaxiController:
         """
         try:
             resp = self.firebase_db.get_passengers(taxi_id)
-            print(resp)
+            print(resp, 'in taxi controller')
             return resp if resp["success"] else {"success": False, "error": resp["error"]}
         except Exception as e:
             return {"success": False, "error": "can't get taxi information - "+str(e)}
