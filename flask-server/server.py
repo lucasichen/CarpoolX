@@ -80,6 +80,13 @@ def taxi_information():
     result = taxi_controller.taxi_information(taxi_id)
     return result
 
+@app.route('/getpassengers', methods=['POST'])
+def taxi_passengers():
+    data = request.get_json()
+    taxi_id = data.get('taxi_id')
+    result = taxi_controller.get_taxi_passengers(taxi_id)
+    return result
+
 @app.route('/user/report', methods=['POST'])
 def report_user():
     data = request.get_json()

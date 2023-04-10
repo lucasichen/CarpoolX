@@ -208,6 +208,26 @@ class FirebaseDatabase(FirebaseInit):
             return {"success": True, "data": taxi.val()}
         except Exception as e:
             return {"success": False, "error": str(e)}
+        
+    def get_passengers(self, taxi_id):
+        """
+        Get taxi's passengers
+        """
+        try:
+            usernames = []
+            print(taxi_id)
+            taxidata = self.db.child("taxi").child(taxi_id).child("passenger_ids").get()
+            if taxidata == None:
+                pass
+            print(taxidata)
+            for user in taxidata.val():
+                user_data = self.db.child("user").child(user).get()
+                print(user_data.val())
+                usernames.append(user_data.val()["name"])
+
+            return {"success": True, "data": usernames}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
     
     def gen_ride_id(self):
         """
