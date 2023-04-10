@@ -13,9 +13,6 @@ const JoinRideScreen = () => {
     const navigation = useNavigation()
     const [pickup, setPickup] = useState('')
     const [destination, setDestination] = useState('')
-    const [capacity, setCapacity] = useState('')
-    const [originGeo, setOriginGeo] = useState(null)
-    const [destGeo, setDestGeo] = useState(null)
 
     const [showPickupError, setPickupError] = useState(false);
     const [showDestError, setDestError] = useState(false);
@@ -56,7 +53,6 @@ const JoinRideScreen = () => {
                   minLength={2}
                   onPress={(data, details = null) => {
                     setPickup(String(data.place_id))
-                    setOriginGeo(details.geometry.location)
                   }}
                   enablePoweredByContainer={false}
                   query={{
@@ -80,7 +76,6 @@ const JoinRideScreen = () => {
                 minLength={2}
                 onPress={(data, details = null) => {
                   setDestination(String(data.place_id))
-                  setDestGeo(details.geometry.location)
                 }}
                 enablePoweredByContainer={false}
                 query={{
@@ -92,16 +87,6 @@ const JoinRideScreen = () => {
             />
             <View style={styles.errorContainer}>
               {showDestError && <Text style={styles.errorMsg}>{errorMsg}</Text>}
-            </View>
-            <View style={styles.capacity}>
-              <Text>
-              How many people in the ride?
-              </Text>
-              <CustomInput
-                placeholder="Enter a number between 1-5"
-                value={capacity}
-                setValue={setCapacity}
-              />
             </View>
           </View>
           <GoogleMaps />

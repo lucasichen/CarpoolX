@@ -19,6 +19,10 @@ const ViewRideScreen = () => {
         />
     )
 
+    const onStartPressed = () =>{
+        navigation.navigate("ViewPeople", {rideToFind})
+    }
+
     const renderMain = () => {
         if (rideArr.length == 0){
             return (
@@ -40,7 +44,7 @@ const ViewRideScreen = () => {
                     <View style={styles.start_button}>
                         <CustomButton
                             text="Start Ride"
-                            //onPress={onStartPressed}
+                            onPress={onStartPressed}
                             type="PRIMARY"
                         />
                     </View>
