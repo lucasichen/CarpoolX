@@ -34,7 +34,7 @@ class RideshareController:
         """
         try:
             response = self.firebase_db.gen_event_id()
-            if response["sucess"]:
+            if response["success"]:
                 event_id = response["data"]
                 self.firebase_db.create_private_event(event_id, location, attendees, date, emails)
                 return {"success": True, "message": "Event created successfully.", "data": event_id}

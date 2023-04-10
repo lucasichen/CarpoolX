@@ -8,12 +8,13 @@ import ConfirmationDialog from '../../components/ConfirmationDialog';
 import { reportUser } from './reportScript';
 
 const ReportScreen = () => {
-    const [code , setCode] = useState('')
+    const [email , setEmail] = useState('')
     const [showError, setShowError] = useState(false)
-    const [showEError, setShowEError] = useState('Please enter valid taxi code');
+    const [showEError, setShowEError] = useState('');
     const navigation = useNavigation();
     const [isConfirmationVisible, setIsConfirmationVisible] = useState(false);
     const [actionType, setActionType] = useState(''); // the type of action the user is confirming
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleConfirmationDismiss = () => {
         setIsConfirmationVisible(false);
@@ -25,17 +26,20 @@ const ReportScreen = () => {
      const handleConfirmationConfirm = () => {
         // handle the delete confirmation here
         setIsConfirmationVisible(false);
-        let resp = reportUser(code);
+        let resp = reportUser(email);
         console.log(resp)
         console.log('person reported');
-        setCode('');
+        setEmail('');
         setShowError(false);
     };
 
     const handleSubmitCode = () => {
-        if (code === '') {
+        if (email === '') {
             setShowError(true);
-            setShowEError('Please enter valid user code');
+            setShowEError('Please enter valid email');
+        } else if (!emailRegex.test(email)) {
+            setShowError(true);
+            setShowEError('Please enter a valid email');
         } else {
             setIsConfirmationVisible(true);
         }
@@ -46,7 +50,7 @@ const ReportScreen = () => {
     */
     const resetVars = useCallback(() => {
         return () => {
-            setCode('');
+            setEmail('');
             setShowError(false);
             setIsConfirmationVisible(false);
         }
@@ -68,12 +72,12 @@ const ReportScreen = () => {
             <Icon name="report" type="material" color="red" size={100}/>
             </View>
             <View style={styles.container_text}>
-            <Text style={styles.instructions}>Please enter the passenger's user code.</Text>
+            <Text style={styles.instructions}>Please enter the passenger's email.</Text>
             </View>
             <CustomInput
-            placeholder="Enter User Code"
-            value={code}
-            setValue={setCode}
+            placeholder="Enter email you want to report"
+            value={email}
+            setValue={setEmail}
             type="ionicon"
             icon="barcode" />
             <View style={styles.error}>

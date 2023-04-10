@@ -109,6 +109,7 @@ def privateEvent():
     location = data.get('location')
     emails = data.get('emails')
     attendees = data.get('attendees')
+    print("date: ", date, "location: ", location, "emails: ", emails, "attendees: ", attendees)
     result = rideshare_controller.create_private_event(date, location, attendees, emails)
     return result
 
