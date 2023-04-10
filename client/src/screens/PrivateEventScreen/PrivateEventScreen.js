@@ -17,13 +17,19 @@ const PrivateEventScreen = () => {
     const [emails, setEmails] = useState([]);
     const [counter, setCounter] = useState(0);
     const [showEmailError, setShowEmailError] = useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState('');
     const [date, setDate] = useState('');
     const [eventID, setEvent] = useState(0);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleEnter = () => {
-        setActionType('event');
-        setConfirmationVisible(true);
+        if (attendees === '' || date === '') {
+            alert('Please fill out all fields');
+        }
+        else {
+            setActionType('event');
+            setConfirmationVisible(true);
+        }
     }
 
     const handleNext = () => {
@@ -40,6 +46,12 @@ const PrivateEventScreen = () => {
                 setCounter(counter => counter + 1);
             }
         } else {
+            if (attendees === '' || date === '') {
+                setShowErrorMessage('Please fill out all fields');
+
+            } else if (counter >= attendees){
+                setShowErrorMessage('Maximum number of attendee emails received');
+            }
             setMaxVisible(true);
         }
     }
@@ -100,7 +112,7 @@ const PrivateEventScreen = () => {
                 <Text style={styles.text}>
                     Please note that only attendees who have a registered account will be able to use the service
                 </Text>
-                {isMaxVisible && <Text style={styles.errorMsg}>Maximum number of attendee emails received</Text>}
+                {isMaxVisible && <Text style={styles.errorMsg}>{showErrorMessage}</Text>}
                 {showEmailError && <Text style={styles.errorMsg}>Invalid email</Text>}
             </View>
                 <CustomButton 
