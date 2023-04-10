@@ -29,3 +29,13 @@ class TaxiController:
             return resp if resp["success"] else {"success": False, "error": resp["error"]}
         except Exception as e:
             return {"success": False, "error": "can't get taxi information - "+str(e)}
+        
+    def add_user(self, id_token, taxi_id):
+        """
+        Adds user to taxi
+        """
+        try:
+            resp = self.firebase_db.add_user(id_token, taxi_id)
+            return resp if resp["success"] else {"success": False, "error": resp["error"]}
+        except Exception as e:
+            return {"success": False, "error": "can't add user to taxi - "+str(e)}

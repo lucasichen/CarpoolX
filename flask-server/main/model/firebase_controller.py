@@ -178,7 +178,23 @@ class FirebaseDatabase(FirebaseInit):
             print('ereerrr')
             return {"error": str(e)}
         
-
+    def add_user(self, uid, taxi_id):
+        """
+        Add user to a taxi
+        """
+        try:
+            taxi = self.db.child("taxi").child(taxi_id).child("passenger_ids").get()
+            if taxi.val() == None:
+                pass
+            print(taxi.val())
+            taxi = taxi.val()
+            taxi.append(uid)
+            print(taxi)
+            response = self.db.child("taxi").child(taxi_id).update({"passenger_ids": taxi})
+            return {"success": True, "data": response}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+        
     def get_user(self, uid):
         """
         Get user's data from the database

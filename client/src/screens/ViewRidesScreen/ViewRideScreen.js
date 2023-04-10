@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
+import { addUser, retrieveTokens } from './viewRideScript';
 
 const ViewRideScreen = () => {
     const route = useRoute();
@@ -19,7 +20,9 @@ const ViewRideScreen = () => {
         />
     )
 
-    const onStartPressed = () =>{
+    const onStartPressed = async () =>{
+        let tokens = await retrieveTokens()
+        addUser(tokens.idToken, rideToFind)
         navigation.navigate("ViewPeople", {rideToFind})
     }
 

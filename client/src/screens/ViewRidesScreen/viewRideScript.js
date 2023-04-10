@@ -17,38 +17,25 @@ export const retrieveTokens = async () => {
     }
 };
 
-/**
- * @description api call to get user profile info
- * @param {*} pickup 
- * @param {*} dest 
- * @param {*} capacity 
- * @param {*} callback 
- * @returns 
- */
-export async function startRide(idToken, pickup, dest, capacity){
+export function addUser(idToken, taxi_id){
     console.log(idToken,'scripe')
-    return fetch('http://10.0.2.2:5000/requestRide', {
+    return fetch('http://10.0.2.2:5000/adduser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': idToken
         },
         body: JSON.stringify({
-            pickuploc: pickup,
-            destloc: dest,
-            capacity: capacity,
-
+            taxi_id: taxi_id,
         })
     })
     .then(res => res.json())
     .then(data => {
       console.log(data)
       if (data.success){
-        console.log("Created Ride")
-        console.log(data.data)
-        return data.data;
+        console.log("Added User to Ride")
       }else{
-        return "Could not create ride"
+        console.log("Error adding user to ride")
       }
     })
     .catch(error =>{

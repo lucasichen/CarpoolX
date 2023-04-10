@@ -14,6 +14,7 @@ import ViewRidesScreen from '../screens/ViewRidesScreen'
 import EndOfRideScreen from "../screens/EndOfRideScreen";
 import RateUserScreen from "../screens/RateUserScreen";
 import ViewPeopleScreen from "../screens/ViewPeopleScreen";
+import ViewPeopleStart from '../screens/ViewPeopleFromStart';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const AppStack = () => {
         <Stack.Screen name="ViewRideOffers" component={ViewRidesScreen} />
         <Stack.Screen name="EndOfRide" component={EndOfRideScreen} />
         <Stack.Screen name="ViewPeople" component={ViewPeopleScreen} />
+        <Stack.Screen name="ViewPeopleStart" component={ViewPeopleStart} />
       </Stack.Navigator>
   )
 }

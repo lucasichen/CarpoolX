@@ -87,6 +87,15 @@ def taxi_passengers():
     result = taxi_controller.get_taxi_passengers(taxi_id)
     return result
 
+@app.route('/adduser', methods=['POST'])
+def add_user():
+    id_token = request.headers.get('Authorization')
+    uid = account_controller.get_uid(id_token)
+    data = request.get_json()
+    taxi_id = data.get('taxi_id')
+    result = taxi_controller.add_user(uid, taxi_id)
+    return result
+
 @app.route('/user/report', methods=['POST'])
 def report_user():
     data = request.get_json()
