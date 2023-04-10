@@ -230,6 +230,7 @@ class FirebaseDatabase(FirebaseInit):
         """
         Create a new event in the database
         """
+        print(emails)
         event_data = {
             "location": location,
             "attendees": attendees,

@@ -32,7 +32,7 @@ export function verifyUser(email, callback) {
 }
 
 
-function sendEvent(location, date, attendees, emails){
+export function sendEvent(location, date, attendees, emails){
     return fetch('http://10.0.2.2:5000/privateEvent', {
         method: 'POST',
         headers: {
@@ -49,7 +49,7 @@ function sendEvent(location, date, attendees, emails){
     .then(data => {
         if (data.success) {
             console.log('Event created');
-            callback(true);
+            return data
         } else {
             callback(false);
         }
