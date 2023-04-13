@@ -22,6 +22,8 @@
 - Then cd in the `client` folder and run `npm install` to download required packages.
 
 ### To run environments
+- create a .env file in the client folder with your google api key
+- and place your firebase credentials json file in the folder `flask-server/main/model`
 - in `flask-server` run `pipenv run server.py`
 - in `client` run `npx react-native start`
 
