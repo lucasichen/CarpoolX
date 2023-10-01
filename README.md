@@ -6,7 +6,9 @@ Welcome to CarpoolX, where we will match make you with riders going along or to 
 
 <details open>
 <summary>Demo</summary>
-![carpoolX_vid_fast](https://github.com/lucasichen/CarpoolX/assets/71472753/809afd31-bbd4-43c3-9c6b-e0d4e342fa98)
+  <p align="center">
+  <img src="https://github.com/lucasichen/CarpoolX/assets/71472753/809afd31-bbd4-43c3-9c6b-e0d4e342fa98">
+</p>
 
 </details>
 
