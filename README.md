@@ -4,7 +4,7 @@ Welcome to CarpoolX, where we will match make you with riders going along or to 
   <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHI2ZnlxdmhwZXA5NWtnOW9ienRnbnY1NGJrZmVnMWgzbThudXhiaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ai0otc0890ZC7S1R0J/giphy.gif">
 </p>
 
-<details open>
+<details closed>
 <summary>Demo</summary>
   <p align="center">
   <img src="https://github.com/lucasichen/CarpoolX/assets/71472753/809afd31-bbd4-43c3-9c6b-e0d4e342fa98">
