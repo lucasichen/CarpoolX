@@ -1,4 +1,12 @@
 # CarpoolX
+Welcome to CarpoolX, where we will match make you with riders going along or to the same destination. This is a andriod app create with React Native, Python, Flask, Firebase, and Google Maps API.
+
+![Images](https://imgflip.com/gif/812h8t)
+
+<details open>
+<summary>Demo</summary>
+https://github.com/lucasichen/CarpoolX/assets/71472753/595b9a01-d076-4b9a-a158-b78892de9d3e
+
 ## Requirements
 - Android SDK
 - Latest Java
@@ -10,7 +18,7 @@
 - Backend: `Python` and `Flask`
 - Database: `Firebase`
 
-## Setting up environment
+## Getting Started
 ### Set up Flask env
 - Place firebase credentials file into `model` folder in `flask-server/main`
 - Create a `.venv` folder in `flask-server` folder
@@ -22,7 +30,7 @@
 - Then cd in the `client` folder and run `npm install` to download required packages.
 
 ### To run environments
-- create a .env file in the client folder with your google api key
+- create a .env file in the client folder with your Google API key or inside `client\android\app\src\main\AndroidManifest.xml` under `android:value`
 - and place your firebase credentials json file in the folder `flask-server/main/model`
 - in `flask-server` run `pipenv run server.py`
 - in `client` run `npx react-native start`
