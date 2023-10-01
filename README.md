@@ -1,7 +1,8 @@
 # CarpoolX
 Welcome to CarpoolX, where we will match make you with riders going along or to the same destination. This is a andriod app create with React Native, Python, Flask, Firebase, and Google Maps API.
-
-![Images](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHI2ZnlxdmhwZXA5NWtnOW9ienRnbnY1NGJrZmVnMWgzbThudXhiaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ai0otc0890ZC7S1R0J/giphy.gif)
+<p align="center">
+  <img src="[https://picsum.photos/460/300](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHI2ZnlxdmhwZXA5NWtnOW9ienRnbnY1NGJrZmVnMWgzbThudXhiaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ai0otc0890ZC7S1R0J/giphy.gif)">
+</p>
 
 <details open>
 <summary>Demo</summary>
