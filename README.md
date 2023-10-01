@@ -7,7 +7,7 @@ Welcome to CarpoolX, where we will match make you with riders going along or to 
 <details open>
 <summary>Demo</summary>
 https://github.com/lucasichen/CarpoolX/assets/71472753/595b9a01-d076-4b9a-a158-b78892de9d3e
-
+</details>
 ## Requirements
 - Android SDK
 - Latest Java
